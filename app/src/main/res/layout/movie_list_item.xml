@@ -10,7 +10,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/moviePoster"
+        android:id="@+id/movieBackdrop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -28,7 +28,7 @@
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/moviePoster"
+        app:layout_constraintTop_toBottomOf="@id/movieBackdrop"
         tools:text="Movie title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

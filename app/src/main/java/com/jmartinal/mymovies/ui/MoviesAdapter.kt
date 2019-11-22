@@ -32,7 +32,7 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movie: Movie) {
             itemView.movieTitle.text = movie.title
-            itemView.moviePoster.loadUrl(Constants.TmdbApi.POSTER_BASE_URL + movie.posterPath)
+            itemView.movieBackdrop.loadUrl(Constants.TmdbApi.POSTER_BASE_URL + movie.posterPath)
         }
     }
 }
