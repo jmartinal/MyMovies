@@ -1,7 +1,8 @@
-package com.jmartinal.mymovies
+package com.jmartinal.mymovies.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jmartinal.mymovies.R
 
 class MovieDetailActivity : AppCompatActivity() {
 
