@@ -12,30 +12,18 @@ data class TmdbMovieResult (
 
 @Parcelize
 data class Movie(
-// TODO Add complex parameters
-    val adult: Boolean,
-    @SerializedName("backdrop_path") val backdropPath: String,
-//    @SerializedName("belongs_to_collection") val belongsToCollection: Collection?,
-    val budget: Int,
-//    val genres: List<Genre>,
-    val homepage: String?,
-    val id: Long,
-    @SerializedName("imdb_id") val imdb_id: String?,
-    @SerializedName("original_language") val originalLanguage: String,
-    @SerializedName("original_title") val originalTitle: String,
-    val overview: String,
-    val popularity: Double,
     @SerializedName("poster_path") val posterPath: String?,
-//    @SerializedName("production_companies") val productionCompanies: List<Company>,
-//    @SerializedName("production_countries") val productionCountries: List<Country>,
+    val adult: Boolean,
+    val overview: String,
     @SerializedName("release_date") val releaseDate: String,
-    val revenue: Long,
-    val runtime: Int?,
-//    @SerializedName("spoken_languages") val spokenLanguages: List<Language>,
-    val status: String,
-    val tagline: String?,
+    @SerializedName("genre_ids") val genreIds: List<Int>,
+    val id: Long,
+    @SerializedName("original_title") val originalTitle: String,
+    @SerializedName("original_language") val originalLanguage: String,
     val title: String,
+    @SerializedName("backdrop_path") val backdropPath: String?,
+    val popularity: Float,
     val video: Boolean,
-    @SerializedName("vote_average") val voteAverage: Double,
-    @SerializedName("vote_count") val voteCount: Int
+    @SerializedName("vote_count") val voteCount: Int,
+    @SerializedName("vote_average") val voteAverage: Float
 ): Parcelable
