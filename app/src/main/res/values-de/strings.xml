@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Meine filme</string>
+    <string name="original_title">Originaler titel: </string>
+    <string name="original_language">Ursprache: </string>
+    <string name="popularity">Popularität: </string>
+</resources>
