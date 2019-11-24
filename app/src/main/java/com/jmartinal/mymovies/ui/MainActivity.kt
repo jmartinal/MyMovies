@@ -22,6 +22,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    private val permissions = arrayOf(
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    )
+
     private val adapter: MoviesAdapter = MoviesAdapter {
         Intent(this@MainActivity, MovieDetailActivity::class.java).apply {
             putExtra(Constants.Communication.KEY_MOVIE, it)
@@ -33,22 +38,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (checkPermissions(
-                arrayOf(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            )
-        ) {
+        if (checkPermissions(permissions)) {
             getMoviesByDeviceRegion()
         } else {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ),
-                PERMISSION_REQUEST_CODE
-            )
+            requestPermissions(permissions, PERMISSION_REQUEST_CODE)
         }
         moviesList.adapter = adapter
     }
