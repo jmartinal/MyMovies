@@ -4,4 +4,8 @@
     <string name="original_title">Título original: </string>
     <string name="original_language">Idioma original: </string>
     <string name="popularity">Popularidad: </string>
+    <string name="internet_error">La conexión de red ha fallado. Por favor, inténtelo de nuevo más tarde</string>
+    <string name="error_title">Error</string>
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
 </resources>
