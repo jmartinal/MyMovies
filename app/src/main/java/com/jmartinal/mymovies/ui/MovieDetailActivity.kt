@@ -1,5 +1,6 @@
 package com.jmartinal.mymovies.ui
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
@@ -9,6 +10,7 @@ import com.jmartinal.mymovies.R
 import com.jmartinal.mymovies.loadUrl
 import com.jmartinal.mymovies.model.Movie
 import kotlinx.android.synthetic.main.activity_movie_detail.*
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -27,8 +29,18 @@ class MovieDetailActivity : AppCompatActivity() {
         }
         moviePoster.loadUrl(Constants.TmdbApi.POSTER_BASE_URL + movie.posterPath)
         movieTitle.text = movie.title
-        movieReleaseDate.text =
-            LocalDate.parse(movie.releaseDate).format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            movieReleaseDate.text =
+                LocalDate.parse(movie.releaseDate)
+                    .format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
+        } else {
+            val parser = SimpleDateFormat("yyyy-mm-dd")
+            val date = parser.parse(movie.releaseDate)
+            val formatter = SimpleDateFormat("MMMM dd, yyyy")
+            val formattedDate = formatter.format(date)
+
+            movieReleaseDate.text = formattedDate
+        }
         movieRating.apply {
             stepSize = 0.1f
             rating = movie.voteAverage / 2
