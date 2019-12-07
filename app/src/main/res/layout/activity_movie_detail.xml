@@ -17,6 +17,7 @@
             android:adjustViewBounds="true"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription"
+            android:minHeight="85dp"
             tools:src="@drawable/ic_launcher_background" />
 
         <ImageView
