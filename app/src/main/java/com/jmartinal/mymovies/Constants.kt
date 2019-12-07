@@ -1,6 +1,12 @@
 package com.jmartinal.mymovies
 
 class Constants {
+    class Communication {
+        companion object {
+            const val KEY_MOVIE = "movie"
+        }
+    }
+
     class TmdbApi {
         companion object {
             const val API_KEY = "a3280f1ae3f9bdab003ab1f6a35197d4"
@@ -10,9 +16,7 @@ class Constants {
         }
     }
 
-    class Communication {
-        companion object {
-            const val KEY_MOVIE = "movie"
-        }
+    companion object {
+        const val DEFAULT_REGION = "US"
     }
 }

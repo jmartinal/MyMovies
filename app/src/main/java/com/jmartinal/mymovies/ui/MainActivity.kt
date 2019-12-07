@@ -1,31 +1,27 @@
 package com.jmartinal.mymovies.ui
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Geocoder
-import android.location.Location
+import android.os.Build
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.jmartinal.mymovies.Constants
 import com.jmartinal.mymovies.R
-import com.jmartinal.mymovies.model.TmdbFactory.tmdbService
+import com.jmartinal.mymovies.model.MoviesRepository
+import com.jmartinal.mymovies.model.NetworkManager
+import com.jmartinal.mymovies.model.PermissionsManager
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
-import kotlin.coroutines.resume
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    private val permissions = arrayOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    )
+    private val networkManager: NetworkManager by lazy { NetworkManager(this) }
+    private val permissionsManager: PermissionsManager by lazy { PermissionsManager(this) }
+    private val moviesRepository: MoviesRepository by lazy { MoviesRepository(this) }
 
     private val adapter: MoviesAdapter = MoviesAdapter {
         Intent(this@MainActivity, MovieDetailActivity::class.java).apply {
@@ -38,54 +34,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (checkPermissions(permissions)) {
-            getMoviesByDeviceRegion()
+        if (permissionsManager.checkPermissionsGranted()) {
+            if (networkManager.isConnected()) {
+                findMovies()
+            } else {
+                notifyNetworkError()
+            }
         } else {
-            requestPermissions(permissions, PERMISSION_REQUEST_CODE)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(permissionsManager.permissionsNeeded, PERMISSION_REQUEST_CODE)
+            }
         }
         moviesList.adapter = adapter
     }
 
-    private fun getMoviesByDeviceRegion() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    private fun findMovies() {
         GlobalScope.launch(Dispatchers.Main) {
-            val location = getLocation()
-            val language = resources.configuration.locales[0].language
-            val movies =
-                tmdbService.listMostPopularMoviesAsync(getRegionFromLocation(location), language)
-                    .await()
-            adapter.movies = movies.results
+            adapter.movies = moviesRepository.findPopularMovies().results
             adapter.notifyDataSetChanged()
         }
     }
 
-    private suspend fun getLocation(): Location? =
-        suspendCancellableCoroutine { continuation ->
-            fusedLocationClient.lastLocation
-                .addOnCompleteListener {
-                    continuation.resume(it.result)
+    private fun notifyNetworkError() {
+        AlertDialog.Builder(this).apply {
+            setTitle(getString(R.string.error_title))
+                .setMessage(getString(R.string.internet_error))
+                .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                    if (networkManager.isConnected()) {
+                        findMovies()
+                    } else {
+                        notifyNetworkError()
+                    }
                 }
+                .setNegativeButton(getString(R.string.cancel)) { _, _ -> finish() }
+                .create()
+                .show()
         }
-
-    private fun getRegionFromLocation(location: Location?): String {
-        val geocoder = Geocoder(this@MainActivity)
-        val address = location?.let {
-            geocoder.getFromLocation(location.latitude, location.longitude, 1)
-        }
-        return address?.firstOrNull()?.countryCode ?: "US"
-    }
-
-    private fun checkPermissions(permissions: Array<String>): Boolean {
-        for (permission in permissions) {
-            if (ContextCompat.checkSelfPermission(
-                    this@MainActivity,
-                    permission
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return false
-            }
-        }
-        return true
     }
 
     override fun onRequestPermissionsResult(
@@ -95,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> {
-                getMoviesByDeviceRegion()
+                findMovies()
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -103,6 +87,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val PERMISSION_REQUEST_CODE = 1
-        private val TAG = MainActivity::class.java.simpleName
     }
 }
