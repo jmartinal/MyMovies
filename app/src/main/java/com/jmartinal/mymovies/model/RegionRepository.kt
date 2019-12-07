@@ -14,7 +14,7 @@ class RegionRepository(context: Context) {
     suspend fun getCurrentRegion() = getCurrentLocation().toRegion()
 
     private suspend fun getCurrentLocation(): Location? {
-        return locationDataSource.getLocation()
+        return locationDataSource.findLastLocation()
     }
 
     private fun Location?.toRegion(): String {
