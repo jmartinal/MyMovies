@@ -2,6 +2,7 @@ package com.jmartinal.mymovies.ui.detail
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
@@ -14,16 +15,35 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity(), MovieDetailPresenter.View {
 
-    private lateinit var movie: Movie
+    private val presenter = MovieDetailPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
-        intent.extras?.apply {
-            movie = get(Constants.Communication.KEY_MOVIE) as Movie
-        }
+
+        val movie: Movie = intent.extras?.get(Constants.Communication.KEY_MOVIE) as Movie
+        presenter.onCreate(this, movie)
+
+    }
+
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
+    }
+
+    override fun showProgress() {
+        content.visibility = View.GONE
+        progress.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        progress.visibility = View.GONE
+        content.visibility = View.VISIBLE
+    }
+
+    override fun updateUI(movie: Movie) {
         movie.backdropPath?.let {
             movieBackdrop.loadUrl(Constants.TmdbApi.BACKDROP_BASE_URL + it)
         }
