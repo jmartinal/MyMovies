@@ -1,4 +1,4 @@
-package com.jmartinal.mymovies.ui
+package com.jmartinal.mymovies.ui.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +16,9 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) :
     var movies: List<Movie> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.movie_list_item, parent, false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.movie_list_item, parent, false)
+        )
     }
 
     override fun getItemCount(): Int {

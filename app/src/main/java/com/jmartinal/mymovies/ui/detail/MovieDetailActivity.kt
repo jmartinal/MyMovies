@@ -1,4 +1,4 @@
-package com.jmartinal.mymovies.ui
+package com.jmartinal.mymovies.ui.detail
 
 import android.os.Build
 import android.os.Bundle
