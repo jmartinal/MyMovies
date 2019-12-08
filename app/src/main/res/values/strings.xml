@@ -4,7 +4,7 @@
     <string name="original_title">Original title: </string>
     <string name="original_language">Original language: </string>
     <string name="popularity">Popularity: </string>
-    <string name="internet_error">Network connection failed. Please, try again later</string>
+    <string name="no_connectivity_error">Network connection failed. Please, try again later</string>
     <string name="error_title">Error</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>

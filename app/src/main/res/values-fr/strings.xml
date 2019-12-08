@@ -4,7 +4,7 @@
     <string name="original_title">Titre original: </string>
     <string name="original_language">Langue originale: </string>
     <string name="popularity">Popularité: </string>
-    <string name="internet_error">La connexion réseau a échoué. Veuillez réessayer plus tard</string>
+    <string name="no_connectivity_error">La connexion réseau a échoué. Veuillez réessayer plus tard</string>
     <string name="error_title">Erreur</string>
     <string name="ok">D\'accord</string>
     <string name="cancel">Annuler</string>
