@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.jmartinal.mymovies.Constants
 import com.jmartinal.mymovies.R
 import com.jmartinal.mymovies.model.Movie
@@ -14,23 +16,28 @@ import com.jmartinal.mymovies.model.NetworkManager
 import com.jmartinal.mymovies.model.PermissionsManager
 import com.jmartinal.mymovies.ui.detail.MovieDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
-class MainActivity : AppCompatActivity(), MainPresenter.View {
+class MainActivity : AppCompatActivity() {
 
     private val permissionsManager by lazy { PermissionsManager(this) }
-
-    private val presenter by lazy { MainPresenter(MoviesRepository(this), NetworkManager(this)) }
-    private val adapter by lazy { MoviesAdapter(presenter::onMovieClicked) }
+    private val adapter by lazy { MoviesAdapter(viewModel::onMovieClicked) }
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        viewModel = ViewModelProviders.of(
+            this,
+            MainViewModel.MainViewModelFactory(
+                MoviesRepository(this),
+                NetworkManager(this)
+            )
+        )[MainViewModel::class.java]
+
         if (permissionsManager.checkPermissionsGranted()) {
-            presenter.onCreate(this)
             moviesList.adapter = adapter
+            viewModel.state.observe(this, Observer(::updateUI))
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(permissionsManager.permissionsNeeded, PERMISSION_REQUEST_CODE)
@@ -38,38 +45,62 @@ class MainActivity : AppCompatActivity(), MainPresenter.View {
         }
     }
 
-    override fun onDestroy() {
-        presenter.onDestroy()
-        super.onDestroy()
+    private fun updateUI(state: MainUIModel) {
+        if (state == MainUIModel.Loading) {
+            showProgress()
+        } else {
+            hideProgress()
+        }
+        when (state) {
+            is MainUIModel.ShowingResult -> {
+                showMovies(state.movies)
+            }
+            is MainUIModel.Navigating -> {
+                navigateTo(state.movie)
+            }
+            is MainUIModel.ShowingError -> {
+                showError(state.error)
+            }
+        }
     }
 
-    override fun showProgress() {
+    private fun showProgress() {
         moviesList.visibility = View.GONE
         progress.visibility = View.VISIBLE
     }
 
-    override fun hideProgress() {
+    private fun hideProgress() {
         moviesList.visibility = View.VISIBLE
         progress.visibility = View.GONE
     }
 
-    override fun updateData(movies: List<Movie>) {
+    private fun showMovies(movies: List<Movie>) {
         adapter.movies = movies
         adapter.notifyDataSetChanged()
     }
 
-    override fun navigateTo(movie: Movie) {
+    private fun navigateTo(movie: Movie) {
         Intent(this@MainActivity, MovieDetailActivity::class.java).apply {
             putExtra(Constants.Communication.KEY_MOVIE, movie)
             startActivity(this)
         }
     }
 
-    override fun showNoConnectivityError() {
+    private fun showError(error: MainUIError) {
+        val message = when (error) {
+            MainUIError.NetworkError -> {
+                getString(R.string.no_connectivity_error)
+            }
+        }
         AlertDialog.Builder(this).apply {
             setTitle(getString(R.string.error_title))
-                .setMessage(getString(R.string.no_connectivity_error))
-                .setPositiveButton(getString(R.string.ok)) { _, _ -> presenter.requestMovies() }
+                .setMessage(message)
+                .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                    viewModel.state.observe(
+                        this@MainActivity,
+                        Observer(::updateUI)
+                    )
+                }
                 .setNegativeButton(getString(R.string.cancel)) { _, _ -> finish() }
                 .create()
                 .show()
@@ -83,7 +114,7 @@ class MainActivity : AppCompatActivity(), MainPresenter.View {
     ) {
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> {
-                presenter::requestMovies
+                viewModel.state.observe(this@MainActivity, Observer(::updateUI))
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
