@@ -1,49 +1,67 @@
 package com.jmartinal.mymovies.ui.detail
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.jmartinal.mymovies.Constants
 import com.jmartinal.mymovies.R
 import com.jmartinal.mymovies.loadUrl
 import com.jmartinal.mymovies.model.Movie
+import com.jmartinal.mymovies.ui.detail.MovieDetailUIModel.Loading
+import com.jmartinal.mymovies.ui.detail.MovieDetailViewModel.MovieDetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class MovieDetailActivity : AppCompatActivity(), MovieDetailPresenter.View {
+class MovieDetailActivity : AppCompatActivity() {
 
-    private val presenter = MovieDetailPresenter()
+    private lateinit var viewModel: MovieDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
         val movie: Movie = intent.extras?.get(Constants.Communication.KEY_MOVIE) as Movie
-        presenter.onCreate(this, movie)
+
+        viewModel = ViewModelProviders.of(
+            this,
+            MovieDetailViewModelFactory(movie)
+        )[MovieDetailViewModel::class.java]
+        viewModel.state.observe(this, Observer(::updateUI))
 
     }
 
-    override fun onDestroy() {
-        presenter.onDestroy()
-        super.onDestroy()
+    private fun updateUI(state: MovieDetailUIModel) {
+        if (state == Loading) {
+            showProgress()
+        } else {
+            hideProgress()
+        }
+        when (state) {
+            is MovieDetailUIModel.ShowingResult -> (showMovieInfo(state.movie))
+        }
     }
 
-    override fun showProgress() {
+    private fun showProgress() {
         content.visibility = View.GONE
         progress.visibility = View.VISIBLE
     }
 
-    override fun hideProgress() {
+    private fun hideProgress() {
         progress.visibility = View.GONE
         content.visibility = View.VISIBLE
     }
 
-    override fun updateUI(movie: Movie) {
+    @SuppressLint("SimpleDateFormat")
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    private fun showMovieInfo(movie: Movie) {
         movie.backdropPath?.let {
             movieBackdrop.loadUrl(Constants.TmdbApi.BACKDROP_BASE_URL + it)
         }
