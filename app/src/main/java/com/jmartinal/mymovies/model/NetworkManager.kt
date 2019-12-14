@@ -1,14 +1,15 @@
 package com.jmartinal.mymovies.model
 
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
-class NetworkManager(context: Context) {
+class NetworkManager(application: Application) {
 
     private val connectivityManager: ConnectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     fun isConnected(): Boolean {
         return isWifiConnected() || isMobileConnected()

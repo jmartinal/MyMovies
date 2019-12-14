@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val permissionsManager by lazy { PermissionsManager(this) }
+    private val permissionsManager by lazy { PermissionsManager(application) }
     private val adapter by lazy { MoviesAdapter(viewModel::onMovieClicked) }
     private lateinit var viewModel: MainViewModel
 
@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(
             this,
             MainViewModel.MainViewModelFactory(
-                MoviesRepository(this),
-                NetworkManager(this)
+                MoviesRepository(application),
+                NetworkManager(application)
             )
         )[MainViewModel::class.java]
 

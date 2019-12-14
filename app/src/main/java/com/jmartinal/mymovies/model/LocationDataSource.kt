@@ -1,6 +1,6 @@
 package com.jmartinal.mymovies.model
 
-import android.content.Context
+import android.app.Application
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -11,9 +11,9 @@ interface LocationDataSource {
     suspend fun findLastLocation(): Location?
 }
 
-class PlayServicesLocationDataSource(context: Context) : LocationDataSource {
+class PlayServicesLocationDataSource(application: Application) : LocationDataSource {
     private val fusedLocationClient: FusedLocationProviderClient =
-        LocationServices.getFusedLocationProviderClient(context)
+        LocationServices.getFusedLocationProviderClient(application)
 
     override suspend fun findLastLocation(): Location? =
         suspendCancellableCoroutine { continuation ->

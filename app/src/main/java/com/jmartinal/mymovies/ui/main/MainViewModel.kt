@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.jmartinal.mymovies.model.Movie
 import com.jmartinal.mymovies.model.MoviesRepository
 import com.jmartinal.mymovies.model.NetworkManager
+import com.jmartinal.mymovies.ui.main.MainUIError.NetworkError
+import com.jmartinal.mymovies.ui.main.MainUIModel.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -35,18 +37,18 @@ class MainViewModel(
         }
 
     private fun requestMovies() {
-        _state.value = MainUIModel.Loading
+        _state.value = Loading
         if (networkManager.isConnected()) {
             GlobalScope.launch(Dispatchers.Main) {
                 _state.value =
-                    MainUIModel.ShowingResult(moviesRepository.findPopularMovies().results)
+                    ShowingResult(moviesRepository.findPopularMovies().results)
             }
         } else {
-            _state.value = MainUIModel.ShowingError(MainUIError.NetworkError)
+            _state.value = ShowingError(NetworkError)
         }
     }
 
     fun onMovieClicked(movie: Movie) {
-        _state.value = MainUIModel.Navigating(movie)
+        _state.value = Navigating(movie)
     }
 }
