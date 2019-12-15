@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.jmartinal.mymovies.model.Movie
 import com.jmartinal.mymovies.model.MoviesRepository
 import com.jmartinal.mymovies.model.NetworkManager
+import com.jmartinal.mymovies.ui.SingleLiveEvent
 import com.jmartinal.mymovies.ui.main.MainUIError.NetworkError
 import com.jmartinal.mymovies.ui.main.MainUIModel.*
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +27,10 @@ class MainViewModel(
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
             MainViewModel(moviesRepository, networkManager) as T
     }
+
+    private val _navigateToDetails = SingleLiveEvent<Movie>()
+    val navigateToDetails: LiveData<Movie>
+        get() = _navigateToDetails
 
     private val _state = MutableLiveData<MainUIModel>()
     val state: LiveData<MainUIModel>
@@ -49,6 +54,7 @@ class MainViewModel(
     }
 
     fun onMovieClicked(movie: Movie) {
-        _state.value = Navigating(movie)
+        _navigateToDetails.value = movie
     }
+
 }

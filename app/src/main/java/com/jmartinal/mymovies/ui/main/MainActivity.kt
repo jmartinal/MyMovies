@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         if (permissionsManager.checkPermissionsGranted()) {
             moviesList.adapter = adapter
             viewModel.state.observe(this, Observer(::updateUI))
+            viewModel.navigateToDetails.observe(this, Observer(::navigateTo))
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(permissionsManager.permissionsNeeded, PERMISSION_REQUEST_CODE)
