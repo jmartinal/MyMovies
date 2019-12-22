@@ -1,4 +1,4 @@
-package com.jmartinal.mymovies.model
+package com.jmartinal.mymovies.model.server
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jmartinal.mymovies.BuildConfig
@@ -9,7 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object TmdbFactory {
+object MovieFactory {
 
     private val tmdbInterceptor = Interceptor { chain ->
         val newUrl =
@@ -35,7 +35,7 @@ object TmdbFactory {
         })
         .build()
 
-    val tmdbService: TmdbService = Retrofit.Builder()
+    val service: TmdbService = Retrofit.Builder()
         .baseUrl(Constants.TmdbApi.BASE_URL)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())

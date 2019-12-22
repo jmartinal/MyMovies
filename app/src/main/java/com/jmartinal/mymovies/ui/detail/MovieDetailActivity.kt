@@ -10,9 +10,11 @@ import androidx.core.text.buildSpannedString
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.jmartinal.mymovies.Constants
+import com.jmartinal.mymovies.MovieApp
 import com.jmartinal.mymovies.R
-import com.jmartinal.mymovies.loadUrl
-import com.jmartinal.mymovies.model.Movie
+import com.jmartinal.mymovies.model.database.Movie
+import com.jmartinal.mymovies.model.server.MoviesRepository
+import com.jmartinal.mymovies.ui.common.loadUrl
 import com.jmartinal.mymovies.ui.detail.MovieDetailUIModel.Loading
 import com.jmartinal.mymovies.ui.detail.MovieDetailViewModel.MovieDetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_movie_detail.*
@@ -28,13 +30,17 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
-        val movie: Movie = intent.extras?.get(Constants.Communication.KEY_MOVIE) as Movie
-
+        val movieId = with(intent.extras) {
+            this?.getLong(Constants.Communication.KEY_MOVIE, -1)
+        } ?: -1
         viewModel = ViewModelProviders.of(
             this,
-            MovieDetailViewModelFactory(movie)
+            MovieDetailViewModelFactory(movieId, MoviesRepository(application as MovieApp))
         )[MovieDetailViewModel::class.java]
         viewModel.state.observe(this, Observer(::updateUI))
+
+        movieDetailFavorite.setOnClickListener { viewModel.onFavoriteClicked() }
+
 
     }
 
@@ -96,5 +102,8 @@ class MovieDetailActivity : AppCompatActivity() {
             bold { append(getString(R.string.popularity)) }
             append(movie.popularity.toString())
         }
+
+        val drawable = if (movie.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+        movieDetailFavorite.setImageDrawable(getDrawable(drawable))
     }
 }

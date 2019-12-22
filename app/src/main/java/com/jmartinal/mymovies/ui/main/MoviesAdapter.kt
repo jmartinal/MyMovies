@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jmartinal.mymovies.Constants
 import com.jmartinal.mymovies.R
-import com.jmartinal.mymovies.loadUrl
-import com.jmartinal.mymovies.model.Movie
+import com.jmartinal.mymovies.model.database.Movie
+import com.jmartinal.mymovies.ui.common.loadUrl
 import kotlinx.android.synthetic.main.movie_list_item.view.*
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) :

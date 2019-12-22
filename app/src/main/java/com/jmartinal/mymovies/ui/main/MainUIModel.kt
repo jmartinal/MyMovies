@@ -1,6 +1,7 @@
 package com.jmartinal.mymovies.ui.main
 
-import com.jmartinal.mymovies.model.Movie
+import com.jmartinal.mymovies.model.database.Movie
+
 
 sealed class MainUIModel {
     object Loading : MainUIModel()

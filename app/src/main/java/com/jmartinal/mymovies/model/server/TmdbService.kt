@@ -1,4 +1,4 @@
-package com.jmartinal.mymovies.model
+package com.jmartinal.mymovies.model.server
 
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET

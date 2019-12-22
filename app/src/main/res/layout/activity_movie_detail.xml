@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ProgressBar
             android:id="@+id/progress"
@@ -48,11 +48,24 @@
                 android:adjustViewBounds="true"
                 android:background="@android:color/white"
                 android:padding="1dp"
-                app:layout_constraintBottom_toBottomOf="@id/movieBackdrop"
+                app:layout_constraintBottom_toBottomOf="@id/movieKeyInfo"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/movieBackdrop"
+                app:layout_constraintTop_toTopOf="@id/movieDetailFavorite"
                 tools:ignore="ContentDescription"
                 tools:src="@mipmap/ic_launcher" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/movieDetailFavorite"
+                style="@style/Widget.Design.FloatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/colorAccent"
+                android:src="@drawable/ic_favorite_off"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="@id/movieBackdrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/movieBackdrop" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/movieKeyInfo"
@@ -63,7 +76,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/moviePoster"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/moviePoster"
-                app:layout_constraintTop_toBottomOf="@id/movieBackdrop">
+                app:layout_constraintTop_toBottomOf="@id/movieDetailFavorite">
 
                 <TextView
                     android:id="@+id/movieTitle"
@@ -76,7 +89,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/movieReleaseDate"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Movie title" />
+                    tools:text="This is a pretty long Movie title displayed in 2 lines" />
 
                 <TextView
                     android:id="@+id/movieReleaseDate"
@@ -95,6 +108,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/movieReleaseDate"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/movieReleaseDate" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -139,6 +153,7 @@
                     tools:text="Popularity" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

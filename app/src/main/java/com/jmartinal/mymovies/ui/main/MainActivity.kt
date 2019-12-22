@@ -9,11 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.jmartinal.mymovies.Constants
+import com.jmartinal.mymovies.MovieApp
 import com.jmartinal.mymovies.R
-import com.jmartinal.mymovies.model.Movie
-import com.jmartinal.mymovies.model.MoviesRepository
 import com.jmartinal.mymovies.model.NetworkManager
 import com.jmartinal.mymovies.model.PermissionsManager
+import com.jmartinal.mymovies.model.database.Movie
+import com.jmartinal.mymovies.model.server.MoviesRepository
 import com.jmartinal.mymovies.ui.detail.MovieDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(
             this,
             MainViewModel.MainViewModelFactory(
-                MoviesRepository(application),
+                MoviesRepository(applicationContext as MovieApp),
                 NetworkManager(application)
             )
         )[MainViewModel::class.java]
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateTo(movie: Movie) {
         Intent(this@MainActivity, MovieDetailActivity::class.java).apply {
-            putExtra(Constants.Communication.KEY_MOVIE, movie)
+            putExtra(Constants.Communication.KEY_MOVIE, movie.id)
             startActivity(this)
         }
     }

@@ -4,14 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.jmartinal.mymovies.model.Movie
+import com.jmartinal.mymovies.model.server.MoviesRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class MovieDetailViewModel(val movie: Movie) : ViewModel() {
+class MovieDetailViewModel(
+    private val movieId: Long,
+    private val moviesRepository: MoviesRepository
+) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")
-    class MovieDetailViewModelFactory(private val movie: Movie) : ViewModelProvider.Factory {
+    class MovieDetailViewModelFactory(
+        private val movieId: Long,
+        private val moviesRepository: MoviesRepository
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            MovieDetailViewModel(movie) as T
+            MovieDetailViewModel(movieId, moviesRepository) as T
 
     }
 
@@ -19,13 +28,24 @@ class MovieDetailViewModel(val movie: Movie) : ViewModel() {
     val state: LiveData<MovieDetailUIModel>
         get() {
             if (_state.value == null) {
-                fetchMovieData(movie)
+                findMovie(movieId)
             }
             return _state
         }
 
-    fun fetchMovieData(movie: Movie) {
+    private fun findMovie(movieId: Long) = GlobalScope.launch(Dispatchers.Main) {
         _state.value = MovieDetailUIModel.Loading
-        _state.value = MovieDetailUIModel.ShowingResult(movie)
+        _state.value = MovieDetailUIModel.ShowingResult(moviesRepository.getById(movieId))
+    }
+
+    fun onFavoriteClicked() = GlobalScope.launch(Dispatchers.Main) {
+        if (_state.value is MovieDetailUIModel.ShowingResult) {
+            (_state.value as MovieDetailUIModel.ShowingResult).movie?.let {
+                val updatedMovie = it.copy(favorite = !it.favorite)
+                _state.value = MovieDetailUIModel.ShowingResult(updatedMovie)
+                moviesRepository.update(updatedMovie)
+            }
+        }
+
     }
 }

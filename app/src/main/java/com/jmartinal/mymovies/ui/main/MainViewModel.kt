@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.jmartinal.mymovies.model.Movie
-import com.jmartinal.mymovies.model.MoviesRepository
 import com.jmartinal.mymovies.model.NetworkManager
+import com.jmartinal.mymovies.model.database.Movie
+import com.jmartinal.mymovies.model.server.MoviesRepository
 import com.jmartinal.mymovies.ui.SingleLiveEvent
 import com.jmartinal.mymovies.ui.main.MainUIError.NetworkError
 import com.jmartinal.mymovies.ui.main.MainUIModel.*
@@ -46,7 +46,7 @@ class MainViewModel(
         if (networkManager.isConnected()) {
             GlobalScope.launch(Dispatchers.Main) {
                 _state.value =
-                    ShowingResult(moviesRepository.findPopularMovies().results)
+                    ShowingResult(moviesRepository.findPopularMovies())
             }
         } else {
             _state.value = ShowingError(NetworkError)
