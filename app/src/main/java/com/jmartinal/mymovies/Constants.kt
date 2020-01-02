@@ -7,6 +7,13 @@ class Constants {
         }
     }
 
+    class Preferences {
+        companion object {
+            const val PREF_FILE_NAME = "pref_file"
+            const val BD_LAST_UPDATE = "bd_last_update"
+        }
+    }
+
     class TmdbApi {
         companion object {
             const val API_KEY = "a3280f1ae3f9bdab003ab1f6a35197d4"
