@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">My Movies</string>
     <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
-    <string name="original_title">Original title: </string>
-    <string name="original_language">Original language: </string>
-    <string name="popularity">Popularity: </string>
+    <string name="original_title"><b>Original title:</b> \"%1$s\"</string>
+    <string name="original_language"><b>Original language:</b> %1$s</string>
+    <string name="popularity"><b>Popularity:</b> %1$s</string>
     <string name="no_connectivity_error">Network connection failed. Please, try again later</string>
     <string name="error_title">Error</string>
     <string name="ok">OK</string>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Mis películas</string>
-    <string name="original_title">Título original: </string>
-    <string name="original_language">Idioma original: </string>
-    <string name="popularity">Popularidad: </string>
+    <string name="original_title"><b>Título original:</b> \"%1$s\"</string>
+    <string name="original_language"><b>Idioma original:</b> %1$s</string>
+    <string name="popularity"><b>Popularidad:</b> %1$s</string>
     <string name="no_connectivity_error">La conexión de red ha fallado. Por favor, inténtelo de nuevo más tarde</string>
     <string name="error_title">Error</string>
     <string name="ok">Aceptar</string>
