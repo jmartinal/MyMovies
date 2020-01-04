@@ -8,8 +8,6 @@ import com.jmartinal.mymovies.model.NetworkManager
 import com.jmartinal.mymovies.model.database.Movie
 import com.jmartinal.mymovies.model.server.MoviesRepository
 import com.jmartinal.mymovies.ui.SingleLiveEvent
-import com.jmartinal.mymovies.ui.main.MainUIError.NetworkError
-import com.jmartinal.mymovies.ui.main.MainUIModel.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -28,28 +26,34 @@ class MainViewModel(
             MainViewModel(moviesRepository, networkManager) as T
     }
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> get() = _loading
+
+    private val _moviesList = MutableLiveData<List<Movie>>()
+    val moviesList: LiveData<List<Movie>> get() = _moviesList
+
+    private val _error = SingleLiveEvent<MainUIError>()
+    val error: SingleLiveEvent<MainUIError> get() = _error
+
     private val _navigateToDetails = SingleLiveEvent<Movie>()
     val navigateToDetails: LiveData<Movie>
         get() = _navigateToDetails
 
-    private val _state = MutableLiveData<MainUIModel>()
-    val state: LiveData<MainUIModel>
-        get() {
-            if (_state.value == null) {
-                requestMovies()
-            }
-            return _state
-        }
+    init {
+        requestMovies()
+    }
 
     private fun requestMovies() {
-        _state.value = Loading
         if (networkManager.isConnected()) {
             GlobalScope.launch(Dispatchers.Main) {
-                _state.value =
-                    ShowingResult(moviesRepository.findPopularMovies())
+                _loading.value = true
+                _moviesList.value = moviesRepository.findPopularMovies()
+                _loading.value = false
             }
         } else {
-            _state.value = ShowingError(NetworkError)
+            _loading.value = true
+            _error.value = MainUIError.NetworkError
+            _loading.value = false
         }
     }
 
