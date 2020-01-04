@@ -4,8 +4,9 @@
     <string name="original_title"><b>Original title:</b> \"%1$s\"</string>
     <string name="original_language"><b>Original language:</b> %1$s</string>
     <string name="popularity"><b>Popularity:</b> %1$s</string>
-    <string name="no_connectivity_error">Network connection failed. Please, try again later</string>
     <string name="error_title">Error</string>
+    <string name="generic_error">An error has occurred. Please, try again later</string>
+    <string name="no_connectivity_error">Network connection failed. Please, try again later</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 </resources>

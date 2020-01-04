@@ -8,4 +8,5 @@
     <string name="error_title">Error</string>
     <string name="ok">Okay</string>
     <string name="cancel">Stornieren</string>
+    <string name="generic_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal</string>
 </resources>
