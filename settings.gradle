@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':usecases', ':domain', ':data'
 rootProject.name='My Movies'
