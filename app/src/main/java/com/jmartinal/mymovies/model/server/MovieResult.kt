@@ -12,18 +12,18 @@ data class TmdbMovieResult (
 
 @Parcelize
 data class Movie(
-    @SerializedName("poster_path") val posterPath: String?,
-    val adult: Boolean,
-    val overview: String,
-    @SerializedName("release_date") val releaseDate: String,
-    @SerializedName("genre_ids") val genreIds: List<Int>,
     val id: Long,
-    @SerializedName("original_title") val originalTitle: String,
-    @SerializedName("original_language") val originalLanguage: String,
-    val title: String,
+    val adult: Boolean,
     @SerializedName("backdrop_path") val backdropPath: String?,
+    @SerializedName("genre_ids") val genreIds: List<Int>,
+    @SerializedName("original_language") val originalLanguage: String,
+    @SerializedName("original_title") val originalTitle: String,
+    val overview: String,
     val popularity: Float,
+    @SerializedName("poster_path") val posterPath: String?,
+    @SerializedName("release_date") val releaseDate: String,
+    val title: String,
     val video: Boolean,
-    @SerializedName("vote_count") val voteCount: Int,
-    @SerializedName("vote_average") val voteAverage: Float
+    @SerializedName("vote_average") val voteAverage: Float,
+    @SerializedName("vote_count") val voteCount: Int
 ): Parcelable

@@ -1,11 +1,7 @@
-package com.jmartinal.mymovies.model.database
+package com.jmartinal.domain
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity
 data class Movie(
-    @PrimaryKey(autoGenerate = false) val id: Long,
+    val id: Long,
     val adult: Boolean,
     val backdropPath: String?,
     val favorite: Boolean,

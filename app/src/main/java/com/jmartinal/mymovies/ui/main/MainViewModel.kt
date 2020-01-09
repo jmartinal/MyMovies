@@ -4,26 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.jmartinal.domain.Movie
 import com.jmartinal.mymovies.model.NetworkManager
-import com.jmartinal.mymovies.model.database.Movie
-import com.jmartinal.mymovies.model.server.MoviesRepository
 import com.jmartinal.mymovies.ui.SingleLiveEvent
+import com.jmartinal.usecases.GetPopularMovies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val moviesRepository: MoviesRepository,
+    private val getPopularMovies: GetPopularMovies,
     private val networkManager: NetworkManager
 ) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")
     class MainViewModelFactory(
-        private val moviesRepository: MoviesRepository,
+        private val getPopularMovies: GetPopularMovies,
         private val networkManager: NetworkManager
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            MainViewModel(moviesRepository, networkManager) as T
+            MainViewModel(getPopularMovies, networkManager) as T
     }
 
     private val _loading = MutableLiveData<Boolean>()
@@ -47,7 +47,7 @@ class MainViewModel(
         if (networkManager.isConnected()) {
             GlobalScope.launch(Dispatchers.Main) {
                 _loading.value = true
-                _moviesList.value = moviesRepository.findPopularMovies()
+                _moviesList.value = getPopularMovies.invoke()
                 _loading.value = false
             }
         } else {

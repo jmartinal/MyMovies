@@ -9,17 +9,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.jmartinal.data.repository.LanguageRepository
+import com.jmartinal.data.repository.MoviesRepository
+import com.jmartinal.data.repository.RegionRepository
+import com.jmartinal.data.source.LanguageDataSource
+import com.jmartinal.data.source.LocalDataSource
+import com.jmartinal.domain.Movie
 import com.jmartinal.mymovies.Constants
-import com.jmartinal.mymovies.MovieApp
 import com.jmartinal.mymovies.R
 import com.jmartinal.mymovies.databinding.ActivityMainBinding
 import com.jmartinal.mymovies.model.NetworkManager
 import com.jmartinal.mymovies.model.PermissionsManager
-import com.jmartinal.mymovies.model.database.Movie
-import com.jmartinal.mymovies.model.server.MoviesRepository
+import com.jmartinal.mymovies.model.PlayServicesLocationDataSource
 import com.jmartinal.mymovies.ui.detail.MovieDetailActivity
 import com.jmartinal.mymovies.ui.main.MainUIError.GenericError
 import com.jmartinal.mymovies.ui.main.MainUIError.NetworkError
+import com.jmartinal.usecases.GetPopularMovies
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +39,13 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(
             this,
             MainViewModel.MainViewModelFactory(
-                MoviesRepository(applicationContext as MovieApp),
+                //TODO Initialize use case's parameters
+                GetPopularMovies(MoviesRepository(
+                    RoomDataSource(app.db),
+                    TmdbDataSource(),
+                    RegionRepository(PlayServicesLocationDataSource(app)),
+                    LanguageRepository(LanguageDataSource())
+                )),
                 NetworkManager(application)
             )
         )[MainViewModel::class.java]

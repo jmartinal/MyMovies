@@ -58,18 +58,18 @@ class MoviesRepository(application: MovieApp) {
 }
 
 private fun ServerMovie.convertToDbMovie() = DbMovie(
-    posterPath,
-    adult,
-    overview,
-    releaseDate,
     id,
-    originalTitle,
-    originalLanguage,
-    title,
+    adult,
     backdropPath,
-    popularity,
-    video,
-    voteCount,
-    voteAverage,
-    favorite = false
+    favorite = false,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle,
+    overview = overview,
+    popularity = popularity,
+    posterPath = posterPath,
+    releaseDate = releaseDate,
+    title = title,
+    video = video,
+    voteAverage = voteAverage,
+    voteCount = voteCount
 )
