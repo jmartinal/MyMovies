@@ -1,4 +1,4 @@
-package com.jmartinal.mymovies.model.server
+package com.jmartinal.mymovies.data.server
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jmartinal.mymovies.BuildConfig

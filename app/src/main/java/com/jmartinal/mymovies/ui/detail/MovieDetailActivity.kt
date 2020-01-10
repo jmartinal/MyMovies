@@ -8,7 +8,7 @@ import com.jmartinal.mymovies.Constants
 import com.jmartinal.mymovies.MovieApp
 import com.jmartinal.mymovies.R
 import com.jmartinal.mymovies.databinding.ActivityMovieDetailBinding
-import com.jmartinal.mymovies.model.server.MoviesRepository
+import com.jmartinal.mymovies.data.server.MoviesRepository
 import com.jmartinal.mymovies.ui.detail.MovieDetailViewModel.MovieDetailViewModelFactory
 
 class MovieDetailActivity : AppCompatActivity() {

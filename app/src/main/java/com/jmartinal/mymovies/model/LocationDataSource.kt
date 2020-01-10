@@ -11,7 +11,7 @@ interface LocationDataSource {
     suspend fun findLastLocation(): Location?
 }
 
-class PlayServicesLocationDataSource(application: Application) : LocationDataSource {
+class OldPlayServicesLocationDataSource(application: Application) : LocationDataSource {
     private val fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(application)
 

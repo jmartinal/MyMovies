@@ -1,15 +1,15 @@
-package com.jmartinal.mymovies.model.server
+package com.jmartinal.mymovies.data.server
 
 import android.content.Context
 import com.jmartinal.mymovies.Constants
 import com.jmartinal.mymovies.MovieApp
-import com.jmartinal.mymovies.model.LanguageRepository
-import com.jmartinal.mymovies.model.RegionRepository
+import com.jmartinal.mymovies.data.LanguageRepository
+import com.jmartinal.mymovies.data.RegionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
-import com.jmartinal.mymovies.model.database.Movie as DbMovie
-import com.jmartinal.mymovies.model.server.Movie as ServerMovie
+import com.jmartinal.mymovies.data.database.Movie as DbMovie
+import com.jmartinal.mymovies.data.server.Movie as ServerMovie
 
 class MoviesRepository(application: MovieApp) {
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jmartinal.domain.Movie
-import com.jmartinal.mymovies.model.NetworkManager
+import com.jmartinal.mymovies.data.NetworkManager
 import com.jmartinal.mymovies.ui.SingleLiveEvent
 import com.jmartinal.usecases.GetPopularMovies
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +32,9 @@ class MainViewModel(
     private val _moviesList = MutableLiveData<List<Movie>>()
     val moviesList: LiveData<List<Movie>> get() = _moviesList
 
+    private val _requestPermission = MutableLiveData<SingleLiveEvent<Unit>>()
+    val requestPermission: LiveData<SingleLiveEvent<Unit>> get() = _requestPermission
+
     private val _error = SingleLiveEvent<MainUIError>()
     val error: SingleLiveEvent<MainUIError> get() = _error
 
@@ -40,10 +43,14 @@ class MainViewModel(
         get() = _navigateToDetails
 
     init {
-        requestMovies()
+        refresh()
     }
 
-    private fun requestMovies() {
+    private fun refresh() {
+        _requestPermission.value = SingleLiveEvent()
+    }
+
+    fun onPermissionGranted() {
         if (networkManager.isConnected()) {
             GlobalScope.launch(Dispatchers.Main) {
                 _loading.value = true

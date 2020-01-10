@@ -2,7 +2,7 @@ package com.jmartinal.mymovies
 
 import android.app.Application
 import androidx.room.Room
-import com.jmartinal.mymovies.model.database.MovieDB
+import com.jmartinal.mymovies.data.database.MovieDB
 
 class MovieApp : Application() {
 

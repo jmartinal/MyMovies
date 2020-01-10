@@ -1,4 +1,4 @@
-package com.jmartinal.mymovies.model.server
+package com.jmartinal.mymovies.data.server
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize

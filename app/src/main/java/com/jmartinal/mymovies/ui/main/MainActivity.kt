@@ -1,7 +1,7 @@
 package com.jmartinal.mymovies.ui.main
 
+import android.Manifest
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -12,15 +12,17 @@ import androidx.lifecycle.ViewModelProviders
 import com.jmartinal.data.repository.LanguageRepository
 import com.jmartinal.data.repository.MoviesRepository
 import com.jmartinal.data.repository.RegionRepository
-import com.jmartinal.data.source.LanguageDataSource
-import com.jmartinal.data.source.LocalDataSource
 import com.jmartinal.domain.Movie
 import com.jmartinal.mymovies.Constants
+import com.jmartinal.mymovies.MovieApp
 import com.jmartinal.mymovies.R
+import com.jmartinal.mymovies.data.AndroidPermissionManager
+import com.jmartinal.mymovies.data.DeviceLanguageDataSource
+import com.jmartinal.mymovies.data.NetworkManager
+import com.jmartinal.mymovies.data.PlayServicesLocationDataSource
+import com.jmartinal.mymovies.data.database.RoomDataSource
+import com.jmartinal.mymovies.data.server.TmdbDataSource
 import com.jmartinal.mymovies.databinding.ActivityMainBinding
-import com.jmartinal.mymovies.model.NetworkManager
-import com.jmartinal.mymovies.model.PermissionsManager
-import com.jmartinal.mymovies.model.PlayServicesLocationDataSource
 import com.jmartinal.mymovies.ui.detail.MovieDetailActivity
 import com.jmartinal.mymovies.ui.main.MainUIError.GenericError
 import com.jmartinal.mymovies.ui.main.MainUIError.NetworkError
@@ -29,24 +31,29 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val permissionsManager by lazy { PermissionsManager(application) }
+    private val app by lazy { (application as MovieApp) }
     private val adapter by lazy { MoviesAdapter(viewModel::onMovieClicked) }
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         viewModel = ViewModelProviders.of(
             this,
             MainViewModel.MainViewModelFactory(
-                //TODO Initialize use case's parameters
-                GetPopularMovies(MoviesRepository(
-                    RoomDataSource(app.db),
-                    TmdbDataSource(),
-                    RegionRepository(PlayServicesLocationDataSource(app)),
-                    LanguageRepository(LanguageDataSource())
-                )),
-                NetworkManager(application)
+                GetPopularMovies(
+                    MoviesRepository(
+                        RoomDataSource(app.database),
+                        TmdbDataSource(),
+                        RegionRepository(
+                            PlayServicesLocationDataSource(app),
+                            AndroidPermissionManager(app, this@MainActivity)
+                        ),
+                        LanguageRepository(DeviceLanguageDataSource(app))
+                    )
+                ),
+                NetworkManager(app)
             )
         )[MainViewModel::class.java]
 
@@ -58,16 +65,16 @@ class MainActivity : AppCompatActivity() {
 
         showProgress()
 
-        if (permissionsManager.checkPermissionsGranted()) {
-            moviesList.adapter = adapter
-            viewModel.error.observe(this, Observer(::showError))
-            viewModel.moviesList.observe(this, Observer(::showMovies))
-            viewModel.navigateToDetails.observe(this, Observer(::navigateTo))
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(permissionsManager.permissionsNeeded, PERMISSION_REQUEST_CODE)
+        moviesList.adapter = adapter
+        viewModel.error.observe(this, Observer(::showError))
+        viewModel.moviesList.observe(this, Observer(::showMovies))
+        viewModel.navigateToDetails.observe(this, Observer(::navigateTo))
+        viewModel.requestPermission.observe(this, Observer {
+            val permissionManager = AndroidPermissionManager(app, this@MainActivity)
+            permissionManager.requestPermission(Manifest.permission.ACCESS_COARSE_LOCATION) {
+                viewModel.onPermissionGranted()
             }
-        }
+        })
     }
 
     private fun showProgress() {
@@ -110,21 +117,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            PERMISSION_REQUEST_CODE -> {
-                viewModel.error.observe(this@MainActivity, Observer(::showError))
-                viewModel.moviesList.observe(this@MainActivity, Observer(::showMovies))
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        when (requestCode) {
+//            AndroidPermissionManager.PERMISSION_REQUEST_CODE -> {
+//                viewModel.error.observe(this@MainActivity, Observer(::showError))
+//                viewModel.moviesList.observe(this@MainActivity, Observer(::showMovies))
+//            }
+//        }
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//    }
 
-    companion object {
-        private const val PERMISSION_REQUEST_CODE = 1
-    }
 }
