@@ -117,18 +117,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        when (requestCode) {
-//            AndroidPermissionManager.PERMISSION_REQUEST_CODE -> {
-//                viewModel.error.observe(this@MainActivity, Observer(::showError))
-//                viewModel.moviesList.observe(this@MainActivity, Observer(::showMovies))
-//            }
-//        }
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//    }
-
 }
