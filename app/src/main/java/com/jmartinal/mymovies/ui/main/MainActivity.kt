@@ -13,14 +13,17 @@ import com.jmartinal.data.repository.LanguageRepository
 import com.jmartinal.data.repository.MoviesRepository
 import com.jmartinal.data.repository.RegionRepository
 import com.jmartinal.data.source.LanguageDataSource
-import com.jmartinal.data.source.LocalDataSource
 import com.jmartinal.domain.Movie
 import com.jmartinal.mymovies.Constants
+import com.jmartinal.mymovies.MovieApp
 import com.jmartinal.mymovies.R
+import com.jmartinal.mymovies.data.DeviceLanguageDataSource
+import com.jmartinal.mymovies.data.database.RoomDataSource
 import com.jmartinal.mymovies.databinding.ActivityMainBinding
-import com.jmartinal.mymovies.model.NetworkManager
-import com.jmartinal.mymovies.model.PermissionsManager
-import com.jmartinal.mymovies.model.PlayServicesLocationDataSource
+import com.jmartinal.mymovies.data.NetworkManager
+import com.jmartinal.mymovies.data.PermissionsManager
+import com.jmartinal.mymovies.data.PlayServicesLocationDataSource
+import com.jmartinal.mymovies.data.server.TmdbDataSource
 import com.jmartinal.mymovies.ui.detail.MovieDetailActivity
 import com.jmartinal.mymovies.ui.main.MainUIError.GenericError
 import com.jmartinal.mymovies.ui.main.MainUIError.NetworkError
@@ -35,18 +38,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val app = (application as MovieApp)
 
         viewModel = ViewModelProviders.of(
             this,
             MainViewModel.MainViewModelFactory(
                 //TODO Initialize use case's parameters
                 GetPopularMovies(MoviesRepository(
-                    RoomDataSource(app.db),
+                    RoomDataSource(app.database),
                     TmdbDataSource(),
                     RegionRepository(PlayServicesLocationDataSource(app)),
-                    LanguageRepository(LanguageDataSource())
+                    LanguageRepository(DeviceLanguageDataSource(app))
                 )),
-                NetworkManager(application)
+                NetworkManager(app)
             )
         )[MainViewModel::class.java]
 

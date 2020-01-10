@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jmartinal.domain.Movie
-import com.jmartinal.mymovies.model.NetworkManager
+import com.jmartinal.mymovies.data.NetworkManager
 import com.jmartinal.mymovies.ui.SingleLiveEvent
 import com.jmartinal.usecases.GetPopularMovies
 import kotlinx.coroutines.Dispatchers

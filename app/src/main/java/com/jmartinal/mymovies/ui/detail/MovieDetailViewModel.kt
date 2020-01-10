@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jmartinal.mymovies.Constants
-import com.jmartinal.mymovies.model.database.Movie
-import com.jmartinal.mymovies.model.server.MoviesRepository
+import com.jmartinal.mymovies.data.database.Movie
+import com.jmartinal.mymovies.data.server.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.jmartinal.mymovies.model
+package com.jmartinal.mymovies.data
 
 import android.Manifest
 import android.app.Application

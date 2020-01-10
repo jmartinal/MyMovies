@@ -1,4 +1,4 @@
-package com.jmartinal.mymovies.model.database
+package com.jmartinal.mymovies.data.database
 
 import androidx.room.*
 
