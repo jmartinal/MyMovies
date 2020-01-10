@@ -41,20 +41,10 @@ class AndroidPermissionManager(val application: MovieApp, private val activity: 
                 }
             })
             .check()
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            requestPermissions(activity, (permissions.map { it.toAndroidId() }).toTypedArray(),
-//                PERMISSION_REQUEST_CODE
-//            )
-//        }
     }
 
     private fun PermissionManager.Permission.toAndroidId() = when (this) {
         PermissionManager.Permission.COARSE_LOCATION -> Manifest.permission.ACCESS_COARSE_LOCATION
-    }
-
-    companion object {
-        const val PERMISSION_REQUEST_CODE = 1
     }
 
 }
