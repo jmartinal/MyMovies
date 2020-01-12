@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jmartinal.domain.Movie
-import com.jmartinal.mymovies.data.NetworkManager
+import com.jmartinal.mymovies.data.AndroidConnectivityManager
 import com.jmartinal.mymovies.ui.SingleLiveEvent
 import com.jmartinal.usecases.GetPopularMovies
 import kotlinx.coroutines.Dispatchers
@@ -14,16 +14,16 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val getPopularMovies: GetPopularMovies,
-    private val networkManager: NetworkManager
+    private val androidNetworkManager: AndroidConnectivityManager
 ) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")
     class MainViewModelFactory(
         private val getPopularMovies: GetPopularMovies,
-        private val networkManager: NetworkManager
+        private val androidNetworkManager: AndroidConnectivityManager
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            MainViewModel(getPopularMovies, networkManager) as T
+            MainViewModel(getPopularMovies, androidNetworkManager) as T
     }
 
     private val _loading = MutableLiveData<Boolean>()
@@ -51,7 +51,7 @@ class MainViewModel(
     }
 
     fun onPermissionGranted() {
-        if (networkManager.isConnected()) {
+        if (androidNetworkManager.isConnected()) {
             GlobalScope.launch(Dispatchers.Main) {
                 _loading.value = true
                 _moviesList.value = getPopularMovies.invoke()

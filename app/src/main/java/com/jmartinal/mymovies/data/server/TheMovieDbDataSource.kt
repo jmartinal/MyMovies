@@ -4,11 +4,10 @@ import com.jmartinal.data.source.RemoteDataSource
 import com.jmartinal.domain.Movie
 import com.jmartinal.mymovies.data.toDomainMovie
 
-class TmdbDataSource: RemoteDataSource {
+class TheMovieDbDataSource : RemoteDataSource {
     override suspend fun getPopularMovies(region: String, language: String): List<Movie> =
-        MovieFactory.service.listMostPopularMoviesAsync(
+        TheMovieDb.SERVICE.listMostPopularMoviesAsync(
             region,
             language
         ).await().results.map { it.toDomainMovie() }
-
 }

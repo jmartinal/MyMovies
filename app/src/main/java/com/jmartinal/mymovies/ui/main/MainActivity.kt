@@ -16,12 +16,12 @@ import com.jmartinal.domain.Movie
 import com.jmartinal.mymovies.Constants
 import com.jmartinal.mymovies.MovieApp
 import com.jmartinal.mymovies.R
+import com.jmartinal.mymovies.data.AndroidConnectivityManager
 import com.jmartinal.mymovies.data.AndroidPermissionManager
 import com.jmartinal.mymovies.data.DeviceLanguageDataSource
-import com.jmartinal.mymovies.data.NetworkManager
 import com.jmartinal.mymovies.data.PlayServicesLocationDataSource
 import com.jmartinal.mymovies.data.database.RoomDataSource
-import com.jmartinal.mymovies.data.server.TmdbDataSource
+import com.jmartinal.mymovies.data.server.TheMovieDbDataSource
 import com.jmartinal.mymovies.databinding.ActivityMainBinding
 import com.jmartinal.mymovies.ui.detail.MovieDetailActivity
 import com.jmartinal.mymovies.ui.main.MainUIError.GenericError
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 GetPopularMovies(
                     MoviesRepository(
                         RoomDataSource(app.database),
-                        TmdbDataSource(),
+                        TheMovieDbDataSource(),
                         RegionRepository(
                             PlayServicesLocationDataSource(app),
                             AndroidPermissionManager(app, this@MainActivity)
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                         LanguageRepository(DeviceLanguageDataSource(app))
                     )
                 ),
-                NetworkManager(app)
+                AndroidConnectivityManager(app)
             )
         )[MainViewModel::class.java]
 

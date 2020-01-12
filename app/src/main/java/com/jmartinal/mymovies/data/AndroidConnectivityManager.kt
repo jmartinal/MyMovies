@@ -6,12 +6,13 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
-class NetworkManager(application: Application) {
+class AndroidConnectivityManager(application: Application) :
+    com.jmartinal.data.ConnectivityManager {
 
     private val connectivityManager: ConnectivityManager =
         application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    fun isConnected(): Boolean {
+    override fun isConnected(): Boolean {
         return isWifiConnected() || isMobileConnected()
     }
 

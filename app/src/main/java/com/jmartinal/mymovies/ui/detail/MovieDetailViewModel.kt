@@ -5,9 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.jmartinal.domain.Movie
 import com.jmartinal.mymovies.Constants
-import com.jmartinal.mymovies.data.database.Movie
-import com.jmartinal.mymovies.data.server.MoviesRepository
+import com.jmartinal.usecases.GetMovieById
+import com.jmartinal.usecases.ToggleMovieFavorite
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,16 +17,18 @@ import java.util.*
 
 class MovieDetailViewModel(
     private val movieId: Long,
-    private val moviesRepository: MoviesRepository
+    private val getMovieById: GetMovieById,
+    private val toggleMovieFavorite: ToggleMovieFavorite
 ) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")
     class MovieDetailViewModelFactory(
         private val movieId: Long,
-        private val moviesRepository: MoviesRepository
+        private val getMovieById: GetMovieById,
+        private val toggleMovieFavorite: ToggleMovieFavorite
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            MovieDetailViewModel(movieId, moviesRepository) as T
+            MovieDetailViewModel(movieId, getMovieById, toggleMovieFavorite) as T
 
     }
 
@@ -65,7 +68,7 @@ class MovieDetailViewModel(
 
     init {
         GlobalScope.launch(Dispatchers.Main) {
-            _movie.value = moviesRepository.getById(movieId)
+            _movie.value = getMovieById.invoke(movieId)
             updateUI()
         }
     }
@@ -96,7 +99,7 @@ class MovieDetailViewModel(
     fun onFavoriteClicked() = GlobalScope.launch(Dispatchers.Main) {
         _movie.value?.let {
             val updatedMovie = it.copy(favorite = !it.favorite)
-            moviesRepository.update(updatedMovie)
+            toggleMovieFavorite.invoke(updatedMovie)
             _movie.value = updatedMovie
             updateUI()
         }

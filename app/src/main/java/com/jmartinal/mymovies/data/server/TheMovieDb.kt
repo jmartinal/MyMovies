@@ -9,7 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object MovieFactory {
+object TheMovieDb {
 
     private val tmdbInterceptor = Interceptor { chain ->
         val newUrl =
@@ -35,13 +35,13 @@ object MovieFactory {
         })
         .build()
 
-    val service: TmdbService = Retrofit.Builder()
+    val SERVICE: TheMovieDbService = Retrofit.Builder()
         .baseUrl(Constants.TmdbApi.BASE_URL)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
         .run {
-            create(TmdbService::class.java)
+            create(TheMovieDbService::class.java)
         }
 }
