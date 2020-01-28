@@ -8,59 +8,50 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.jmartinal.data.repository.LanguageRepository
-import com.jmartinal.data.repository.MoviesRepository
-import com.jmartinal.data.repository.RegionRepository
 import com.jmartinal.domain.Movie
 import com.jmartinal.mymovies.Constants
 import com.jmartinal.mymovies.MovieApp
 import com.jmartinal.mymovies.R
-import com.jmartinal.mymovies.data.AndroidConnectivityManager
 import com.jmartinal.mymovies.data.AndroidPermissionManager
-import com.jmartinal.mymovies.data.DeviceLanguageDataSource
-import com.jmartinal.mymovies.data.PlayServicesLocationDataSource
-import com.jmartinal.mymovies.data.database.RoomDataSource
-import com.jmartinal.mymovies.data.server.TheMovieDbDataSource
 import com.jmartinal.mymovies.databinding.ActivityMainBinding
+import com.jmartinal.mymovies.di.DaggerMyMoviesComponent.factory
+import com.jmartinal.mymovies.di.MyMoviesComponent
+import com.jmartinal.mymovies.ui.common.getViewModel
 import com.jmartinal.mymovies.ui.detail.MovieDetailActivity
 import com.jmartinal.mymovies.ui.main.MainUIError.GenericError
 import com.jmartinal.mymovies.ui.main.MainUIError.NetworkError
-import com.jmartinal.usecases.GetPopularMovies
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val app by lazy { (application as MovieApp) }
-    private val adapter by lazy { MoviesAdapter(viewModel::onMovieClicked) }
-    private lateinit var viewModel: MainViewModel
+    @Suppress("UNCHECKED_CAST")
+    private val viewModel by lazy {
+        getViewModel { component.mainViewModel }
+//        val vmFactory = object: ViewModelProvider.Factory{
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return factory() as T
+//            }
+//        }
+//        ViewModelProviders.of(this, vmFactory)[MainViewModel::class.java]
+    }
+    private val adapter by lazy { MoviesAdapter(component.mainViewModel::onMovieClicked) }
+
+    private lateinit var component: MainActivityComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        viewModel = ViewModelProviders.of(
-            this,
-            MainViewModel.MainViewModelFactory(
-                GetPopularMovies(
-                    MoviesRepository(
-                        RoomDataSource(app.database),
-                        TheMovieDbDataSource(),
-                        RegionRepository(
-                            PlayServicesLocationDataSource(app),
-                            AndroidPermissionManager(app, this@MainActivity)
-                        ),
-                        LanguageRepository(DeviceLanguageDataSource(app))
-                    )
-                ),
-                AndroidConnectivityManager(app)
-            )
-        )[MainViewModel::class.java]
+        component = app.component.plus(MainActivityModule())
 
         val binding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        binding.viewModel = viewModel
+        binding.viewModel = component.mainViewModel
         binding.lifecycleOwner = this
 
         showProgress()

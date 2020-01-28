@@ -10,6 +10,8 @@ buildscript {
         glide_version = '4.10.0'
         play_services_version = '17.0.0'
         room_version = '2.2.3'
+        dexter_version = '6.0.1'
+        dagger_version = '2.23.1'
     }
     repositories {
         google()

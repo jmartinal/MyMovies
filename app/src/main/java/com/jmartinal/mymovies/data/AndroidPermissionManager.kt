@@ -1,6 +1,7 @@
 package com.jmartinal.mymovies.data
 
 import android.Manifest
+import android.app.Application
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -11,7 +12,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.BasePermissionListener
 
-class AndroidPermissionManager(val application: MovieApp, private val activity: AppCompatActivity) :
+class AndroidPermissionManager(val application: Application, private val activity: AppCompatActivity) :
     PermissionManager {
 
     override suspend fun checkPermissions(permissions: List<PermissionManager.Permission>): Boolean {

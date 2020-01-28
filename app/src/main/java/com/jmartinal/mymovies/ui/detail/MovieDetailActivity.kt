@@ -22,7 +22,7 @@ import com.jmartinal.usecases.ToggleMovieFavorite
 
 class MovieDetailActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MovieDetailViewModel
+    private lateinit var component: DetailActivityComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,27 +33,13 @@ class MovieDetailActivity : AppCompatActivity() {
 
         val app = application as MovieApp
 
-        val moviesRepository = MoviesRepository(
-            RoomDataSource(app.database),
-            TheMovieDbDataSource(),
-            RegionRepository(
-                PlayServicesLocationDataSource(app),
-                AndroidPermissionManager(app, this@MovieDetailActivity)
-            ),
-            LanguageRepository(DeviceLanguageDataSource(app))
-        )
+        component = app.component.plus(DetailActivityModule(movieId))
 
-        viewModel = ViewModelProviders.of(
-            this,
-            MovieDetailViewModelFactory(
-                movieId, GetMovieById(moviesRepository), ToggleMovieFavorite(moviesRepository)
-            )
-        )[MovieDetailViewModel::class.java]
 
         val binding: ActivityMovieDetailBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
 
-        binding.viewModel = viewModel
+        binding.viewModel = component.detailViewModel
         binding.lifecycleOwner = this
 
     }

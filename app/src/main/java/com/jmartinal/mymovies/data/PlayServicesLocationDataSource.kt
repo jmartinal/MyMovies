@@ -1,15 +1,15 @@
 package com.jmartinal.mymovies.data
 
+import android.app.Application
 import android.location.Geocoder
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.jmartinal.data.source.LocationDataSource
-import com.jmartinal.mymovies.MovieApp
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
-class PlayServicesLocationDataSource(application: MovieApp) : LocationDataSource {
+class PlayServicesLocationDataSource(application: Application) : LocationDataSource {
 
     private val geocoder = Geocoder(application)
     private val fusedLocationClient: FusedLocationProviderClient =
