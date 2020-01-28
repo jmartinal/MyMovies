@@ -31,14 +31,8 @@ class MainActivity : AppCompatActivity() {
     @Suppress("UNCHECKED_CAST")
     private val viewModel by lazy {
         getViewModel { component.mainViewModel }
-//        val vmFactory = object: ViewModelProvider.Factory{
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return factory() as T
-//            }
-//        }
-//        ViewModelProviders.of(this, vmFactory)[MainViewModel::class.java]
     }
-    private val adapter by lazy { MoviesAdapter(component.mainViewModel::onMovieClicked) }
+    private val adapter by lazy { MoviesAdapter(viewModel::onMovieClicked) }
 
     private lateinit var component: MainActivityComponent
 
