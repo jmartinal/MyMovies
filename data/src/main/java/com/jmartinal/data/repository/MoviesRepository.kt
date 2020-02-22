@@ -11,7 +11,7 @@ class MoviesRepository(
     private val networkManager: ConnectivityManager,
     private val regionRepository: RegionRepository,
     private val languageRepository: LanguageRepository
-    ) {
+) {
 
     suspend fun getPopularMovies(): List<Movie> {
         return if (localDataSource.isEmpty()) {
@@ -34,7 +34,5 @@ class MoviesRepository(
         return localDataSource.getMovieById(id)
     }
 
-    suspend fun update(movie: Movie) {
-        return localDataSource.updateMovie(movie)
-    }
+    suspend fun update(movie: Movie) = localDataSource.updateMovie(movie)
 }
