@@ -54,19 +54,19 @@ val appModule = module {
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionManager> { AndroidPermissionManager(get(), get()) }
     factory<LanguageDataSource> { DeviceLanguageDataSource(get()) }
+    factory<ConnectivityManager> { AndroidConnectivityManager(get()) }
 }
 
 val dataModule = module {
     factory{ LanguageRepository(get()) }
-    factory{ MoviesRepository(get(), get(), get(), get()) }
+    factory{ MoviesRepository(get(), get(), get(), get(),get()) }
     factory{ RegionRepository(get(), get()) }
 }
 
 val scopedModule = module {
     scope(named<MainActivity>()) {
-        viewModel { MainViewModel(get(), get()) }
+        viewModel { MainViewModel(get()) }
         scoped { GetPopularMovies(get()) }
-        scoped { AndroidConnectivityManager(get()) }
     }
     scope(named<MovieDetailActivity>()) {
         viewModel { (movieId: Long) -> MovieDetailViewModel(movieId, get(), get()) }

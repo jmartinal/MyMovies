@@ -13,17 +13,15 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val getPopularMovies: GetPopularMovies,
-    private val androidNetworkManager: AndroidConnectivityManager
+    private val getPopularMovies: GetPopularMovies
 ) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")
     class MainViewModelFactory(
-        private val getPopularMovies: GetPopularMovies,
-        private val androidNetworkManager: AndroidConnectivityManager
+        private val getPopularMovies: GetPopularMovies
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            MainViewModel(getPopularMovies, androidNetworkManager) as T
+            MainViewModel(getPopularMovies) as T
     }
 
     private val _loading = MutableLiveData<Boolean>()
@@ -51,16 +49,15 @@ class MainViewModel(
     }
 
     fun onPermissionGranted() {
-        if (androidNetworkManager.isConnected()) {
-            GlobalScope.launch(Dispatchers.Main) {
-                _loading.value = true
-                _moviesList.value = getPopularMovies.invoke()
-                _loading.value = false
-            }
-        } else {
+        GlobalScope.launch(Dispatchers.Main) {
             _loading.value = true
-            _error.value = MainUIError.NetworkError
+            val movies = getPopularMovies.invoke()
             _loading.value = false
+            if (movies.isNotEmpty()) {
+                _moviesList.value = movies
+            } else {
+                _error.value = MainUIError.NetworkError
+            }
         }
     }
 
