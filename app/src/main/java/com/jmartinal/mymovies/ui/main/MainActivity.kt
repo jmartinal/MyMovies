@@ -43,8 +43,12 @@ class MainActivity : AppCompatActivity() {
         viewModel.navigateToDetails.observe(this, Observer(::navigateTo))
         viewModel.requestPermission.observe(this, Observer {
             val permissionManager = AndroidPermissionManager(application, this@MainActivity)
-            permissionManager.requestPermission(Manifest.permission.ACCESS_COARSE_LOCATION) {
-                viewModel.onPermissionGranted()
+            permissionManager.requestPermission(Manifest.permission.ACCESS_COARSE_LOCATION) {continuation ->
+                if (continuation) {
+                    viewModel.onPermissionGranted()
+                } else {
+                    viewModel.onPermissionDenied()
+                }
             }
         })
     }
@@ -75,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     private fun showError(error: MainUIError) {
         hideProgress()
         val message = when (error) {
-            GenericError -> getString(R.string.no_connectivity_error)
+            GenericError -> getString(R.string.generic_error)
             NetworkError -> getString(R.string.no_connectivity_error)
         }
         AlertDialog.Builder(this).apply {

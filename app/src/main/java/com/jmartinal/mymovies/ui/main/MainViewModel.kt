@@ -30,8 +30,8 @@ class MainViewModel(
     private val _moviesList = MutableLiveData<List<Movie>>()
     val moviesList: LiveData<List<Movie>> get() = _moviesList
 
-    private val _requestPermission = MutableLiveData<SingleLiveEvent<Unit>>()
-    val requestPermission: LiveData<SingleLiveEvent<Unit>> get() = _requestPermission
+    private val _requestPermission = SingleLiveEvent<Boolean>()
+    val requestPermission: SingleLiveEvent<Boolean> get() = _requestPermission
 
     private val _error = SingleLiveEvent<MainUIError>()
     val error: SingleLiveEvent<MainUIError> get() = _error
@@ -45,7 +45,7 @@ class MainViewModel(
     }
 
     private fun refresh() {
-        _requestPermission.value = SingleLiveEvent()
+        _requestPermission.value = true
     }
 
     fun onPermissionGranted() {
@@ -59,6 +59,12 @@ class MainViewModel(
                 _error.value = MainUIError.NetworkError
             }
         }
+    }
+
+    fun onPermissionDenied() {
+        _loading.value = true
+        _error.value = MainUIError.GenericError
+        _loading.value = false
     }
 
     fun onMovieClicked(movie: Movie) {
