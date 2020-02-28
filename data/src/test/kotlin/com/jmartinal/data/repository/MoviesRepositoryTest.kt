@@ -1,5 +1,6 @@
 package com.jmartinal.data.repository
 
+import com.jmartinal.data.ConnectivityManager
 import com.jmartinal.data.source.LocalDataSource
 import com.jmartinal.data.source.RemoteDataSource
 import com.jmartinal.testshared.mockedMovie
@@ -22,6 +23,8 @@ class MoviesRepositoryTest {
     @Mock
     lateinit var remoteDataSource: RemoteDataSource
     @Mock
+    lateinit var connectivityManager: ConnectivityManager
+    @Mock
     lateinit var regionRepository: RegionRepository
     @Mock
     lateinit var languageRepository: LanguageRepository
@@ -33,6 +36,7 @@ class MoviesRepositoryTest {
         moviesRepository = MoviesRepository(
             localDataSource,
             remoteDataSource,
+            connectivityManager,
             regionRepository,
             languageRepository
         )
@@ -56,6 +60,7 @@ class MoviesRepositoryTest {
         runBlocking {
             val movies = listOf(mockedMovie.copy(id = 1))
             whenever(localDataSource.isEmpty()).thenReturn(true)
+            whenever(connectivityManager.isConnected()).thenReturn(true)
             whenever(remoteDataSource.getPopularMovies(any(), any())).thenReturn(movies)
             whenever(regionRepository.getCurrentRegion()).thenReturn("ES")
             whenever(languageRepository.getCurrentLanguage()).thenReturn("ES")
