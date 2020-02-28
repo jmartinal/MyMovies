@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.jmartinal.mymovies.ui.detail.MovieDetailActivity" />
+        <activity android:name="com.jmartinal.mymovies.ui.detail.MovieDetailActivity"
+            android:theme="@style/FullScreenTheme"/>
         <activity android:name="com.jmartinal.mymovies.ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
