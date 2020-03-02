@@ -1,18 +1,19 @@
 package com.jmartinal.mymovies.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.jmartinal.domain.Movie
+import com.jmartinal.testshared.mockedMovie
 import com.jmartinal.usecases.GetPopularMovies
+import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
-import kotlinx.coroutines.*
+import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -61,13 +62,69 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `after requesting permissions, loading is shown`() {
+    fun `when started, permissions are requested`() {
+        vm.requestPermission.observeForever(permissionsObserver)
+
+        verify(permissionsObserver).onChanged(true)
+    }
+
+    @Test
+    fun `when permissions accepted, loading is shown and then hidden`() {
         runBlocking {
-            GlobalScope.launch(Dispatchers.Main) {
-                vm.loading.observeForever(loadingObserver)
-                vm.onPermissionGranted()
-                verify(loadingObserver).onChanged(true)
-            }
+            vm.loading.observeForever(loadingObserver)
+
+            val movies = listOf(mockedMovie.copy(id = 1))
+            whenever(getPopularMovies.invoke()).thenReturn(movies)
+
+            vm.onPermissionGranted()
+
+            verify(loadingObserver, times(1)).onChanged(true)
+            verify(loadingObserver, times(1)).onChanged(false)
         }
+    }
+
+    @Test
+    fun `when permissions denied, error is shown`() {
+        vm.error.observeForever(errorObserver)
+        vm.onPermissionDenied()
+
+        verify(errorObserver).onChanged(MainUIError.GenericError)
+    }
+
+    @Test
+    fun `when permissions granted and connectivity is up, movies are fetched`() {
+        runBlocking {
+            vm.moviesList.observeForever(moviesObserver)
+
+            val movies = listOf(mockedMovie.copy(id = 1))
+            whenever(getPopularMovies.invoke()).thenReturn(movies)
+
+            vm.onPermissionGranted()
+
+            verify(moviesObserver).onChanged(movies)
+        }
+    }
+
+    @Test
+    fun `when permissions granted and connectivity is down, error is shown`() {
+        runBlocking {
+            vm.error.observeForever(errorObserver)
+
+            whenever(getPopularMovies.invoke()).thenReturn(emptyList())
+
+            vm.onPermissionGranted()
+
+            verify(errorObserver).onChanged(MainUIError.NetworkError)
+        }
+    }
+
+    @Test
+    fun `when movie clicked, navigation is triggered`() {
+        val movie = mockedMovie.copy(id = 1)
+        vm.navigateToDetails.observeForever(navigationObserver)
+
+        vm.onMovieClicked(movie)
+
+        verify(navigationObserver).onChanged(movie)
     }
 }
