@@ -9,11 +9,8 @@ import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -21,10 +18,9 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
-
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -51,36 +47,15 @@ class MainViewModelTest {
 
     @Before
     fun setup() {
-        vm = MainViewModel(getPopularMovies)
-        Dispatchers.setMain(mainThreadSurrogate)
+        vm = MainViewModel(getPopularMovies, Dispatchers.Unconfined)
     }
 
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-        mainThreadSurrogate.close()
-    }
 
     @Test
     fun `when started, permissions are requested`() {
         vm.requestPermission.observeForever(permissionsObserver)
 
         verify(permissionsObserver).onChanged(true)
-    }
-
-    @Test
-    fun `when permissions accepted, loading is shown and then hidden`() {
-        runBlocking {
-            vm.loading.observeForever(loadingObserver)
-
-            val movies = listOf(mockedMovie.copy(id = 1))
-            whenever(getPopularMovies.invoke()).thenReturn(movies)
-
-            vm.onPermissionGranted()
-
-            verify(loadingObserver, times(1)).onChanged(true)
-            verify(loadingObserver, times(1)).onChanged(false)
-        }
     }
 
     @Test
@@ -92,12 +67,27 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `when permissions granted and connectivity is up, movies are fetched`() {
+    fun `when permissions granted, loading is shown and then hidden`() {
         runBlocking {
-            vm.moviesList.observeForever(moviesObserver)
-
             val movies = listOf(mockedMovie.copy(id = 1))
             whenever(getPopularMovies.invoke()).thenReturn(movies)
+
+            vm.loading.observeForever(loadingObserver)
+
+            vm.onPermissionGranted()
+
+            verify(loadingObserver, times(1)).onChanged(true)
+            verify(loadingObserver, times(1)).onChanged(false)
+        }
+    }
+
+    @Test
+    fun `when permissions granted and connectivity is up, movies are fetched`() {
+        runBlocking {
+            val movies = listOf(mockedMovie.copy(id = 1))
+            whenever(getPopularMovies.invoke()).thenReturn(movies)
+
+            vm.moviesList.observeForever(moviesObserver)
 
             vm.onPermissionGranted()
 
@@ -108,9 +98,10 @@ class MainViewModelTest {
     @Test
     fun `when permissions granted and connectivity is down, error is shown`() {
         runBlocking {
-            vm.error.observeForever(errorObserver)
+            val movies = emptyList<Movie>()
+            whenever(getPopularMovies.invoke()).thenReturn(movies)
 
-            whenever(getPopularMovies.invoke()).thenReturn(emptyList())
+            vm.error.observeForever(errorObserver)
 
             vm.onPermissionGranted()
 

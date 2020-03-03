@@ -2,27 +2,17 @@ package com.jmartinal.mymovies.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import com.antonioleiva.mymovies.ui.common.ScopedViewModel
 import com.jmartinal.domain.Movie
-import com.jmartinal.mymovies.data.AndroidConnectivityManager
 import com.jmartinal.mymovies.ui.SingleLiveEvent
 import com.jmartinal.usecases.GetPopularMovies
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val getPopularMovies: GetPopularMovies
-) : ViewModel() {
-
-    @Suppress("UNCHECKED_CAST")
-    class MainViewModelFactory(
-        private val getPopularMovies: GetPopularMovies
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            MainViewModel(getPopularMovies) as T
-    }
+    private val getPopularMovies: GetPopularMovies,
+    override val uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
@@ -49,7 +39,7 @@ class MainViewModel(
     }
 
     fun onPermissionGranted() {
-        GlobalScope.launch(Dispatchers.Main) {
+        launch {
             _loading.value = true
             val movies = getPopularMovies.invoke()
             _loading.value = false

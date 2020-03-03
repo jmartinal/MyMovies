@@ -3,7 +3,6 @@ package com.jmartinal.mymovies
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.jmartinal.data.ConnectivityManager
 import com.jmartinal.data.PermissionManager
 import com.jmartinal.data.repository.LanguageRepository
@@ -27,6 +26,8 @@ import com.jmartinal.mymovies.ui.main.MainViewModel
 import com.jmartinal.usecases.GetMovieById
 import com.jmartinal.usecases.GetPopularMovies
 import com.jmartinal.usecases.ToggleMovieFavorite
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.android.viewmodel.dsl.viewModel
@@ -55,6 +56,7 @@ val appModule = module {
     factory<PermissionManager> { AndroidPermissionManager(get(), get()) }
     factory<LanguageDataSource> { DeviceLanguageDataSource(get()) }
     factory<ConnectivityManager> { AndroidConnectivityManager(get()) }
+    single<CoroutineDispatcher> { Dispatchers.Main }
 }
 
 val dataModule = module {
@@ -65,11 +67,11 @@ val dataModule = module {
 
 val scopedModule = module {
     scope(named<MainActivity>()) {
-        viewModel { MainViewModel(get()) }
+        viewModel { MainViewModel(get(), get()) }
         scoped { GetPopularMovies(get()) }
     }
     scope(named<MovieDetailActivity>()) {
-        viewModel { (movieId: Long) -> MovieDetailViewModel(movieId, get(), get()) }
+        viewModel { (movieId: Long) -> MovieDetailViewModel(movieId, get(), get(), get()) }
         scoped { GetMovieById(get()) }
         scoped { ToggleMovieFavorite(get()) }
     }

@@ -12,7 +12,7 @@ val mockedMovie = Movie(
     "Overview",
     1.0F,
     "",
-    "01/01/2020",
+    "2020-01-01",
     "Title",
     false,
     7.5F,
