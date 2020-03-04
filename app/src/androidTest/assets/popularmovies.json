@@ -1,0 +1,363 @@
+{
+  "results": [
+    {
+      "popularity": 217.757,
+      "vote_count": 546,
+      "video": false,
+      "poster_path": "\/A7hhUj9Fq6E6FhGsENJTCmnCmt4.jpg",
+      "id": 454626,
+      "adult": false,
+      "backdrop_path": "\/qonBhlm0UjuKX2sH7e73pnG0454.jpg",
+      "original_language": "en",
+      "original_title": "Sonic the Hedgehog",
+      "genre_ids": [
+        28,
+        35,
+        878,
+        10751
+      ],
+      "title": "Sonic. La película",
+      "vote_average": 7.1,
+      "overview": "Sonic, el famoso erizo azul de SEGA vivirá su primera aventura en la pantalla grande. En esta adaptación cinematográfica basada en la conocida saga de videojuegos podremos ver a los personajes icónicos de la franquicia. Su protagonista será Sonic, el erizo con la habilidad de correr a la velocidad del sonido y que, junto con sus amigos el zorro Tails y el equidna Knuckles, combaten con el malvado Doctor Eggman, que siempre está tratando de dominar el mundo y apoderarse de las esmeraldas del caos.",
+      "release_date": "2020-02-14"
+    },
+    {
+      "popularity": 215.93,
+      "vote_count": 174,
+      "video": false,
+      "poster_path": "\/tWbiAwIOmo4A49O60J7U9qjfQDl.jpg",
+      "id": 570670,
+      "adult": false,
+      "backdrop_path": "\/uZMZyvarQuXLRqf3xdpdMqzdtjb.jpg",
+      "original_language": "en",
+      "original_title": "The Invisible Man",
+      "genre_ids": [
+        27,
+        9648,
+        878,
+        53
+      ],
+      "title": "El hombre invisible",
+      "vote_average": 7.5,
+      "overview": "Después de que su abusivo ex novio se suicide, la ingenua viuda Cecilia comienza a reconstruir su vida para mejor. Sin embargo, su sentido de la realidad se pone en tela de juicio cuando comienza a sospechar que su ex novio en realidad no está muerto, como había pensado.",
+      "release_date": "2020-02-28"
+    },
+    {
+      "popularity": 174.91,
+      "vote_count": 39,
+      "video": false,
+      "poster_path": "\/qZ1KAgfdeNbzrNYKW4BIRHdEBJ9.jpg",
+      "id": 666750,
+      "adult": false,
+      "backdrop_path": "\/6mKAKhj8POVGqV1GsroS5mGIUe9.jpg",
+      "original_language": "en",
+      "original_title": "Dragonheart: Vengeance",
+      "genre_ids": [
+        14
+      ],
+      "title": "Dragonheart: Vengeance",
+      "vote_average": 5.8,
+      "overview": "Lukas, un joven agricultor cuya familia es asesinada por salvajes guerreros, se embarca en una aventura épica en busca de venganza, formando un trío imposible con un dragón majestuoso y un mercenario espadachín llamado Darius.",
+      "release_date": "2020-02-04"
+    },
+    {
+      "popularity": 119.641,
+      "vote_count": 930,
+      "video": false,
+      "poster_path": "\/4GCqF17I2ST5M8iSkwh1jwqvi7F.jpg",
+      "id": 495764,
+      "adult": false,
+      "backdrop_path": "\/uozb2VeD87YmhoUP1RrGWfzuCrr.jpg",
+      "original_language": "en",
+      "original_title": "Birds of Prey (and the Fantabulous Emancipation of One Harley Quinn)",
+      "genre_ids": [
+        28,
+        35,
+        80
+      ],
+      "title": "Aves de Presa (y la Fantabulosa Emancipación de Harley Quinn)",
+      "vote_average": 6.8,
+      "overview": "Después de separarse de Joker, Harley Quinn y otras tres heroínas (Canario Negro, Cazadora y Renée Montoya) unen sus fuerzas para salvar a una niña (Cassandra Cain) del malvado rey del crimen Máscara Negra.",
+      "release_date": "2020-02-07"
+    },
+    {
+      "popularity": 89.698,
+      "vote_count": 41,
+      "video": false,
+      "poster_path": "\/2kNnf7BwRCEm4bcFkdiE0T4U25s.jpg",
+      "id": 457335,
+      "adult": false,
+      "backdrop_path": "\/gL7TV2g9y9p3v7occ5bLrJ2p1qs.jpg",
+      "original_language": "en",
+      "original_title": "Guns Akimbo",
+      "genre_ids": [
+        28,
+        35
+      ],
+      "title": "Guns Akimbo",
+      "vote_average": 6.3,
+      "overview": "",
+      "release_date": "2020-02-28"
+    },
+    {
+      "popularity": 92.698,
+      "vote_count": 1031,
+      "video": false,
+      "poster_path": "\/chhwNdkN4n2oIEjz736HPjTJg1h.jpg",
+      "id": 38700,
+      "adult": false,
+      "backdrop_path": "\/upUy2QhMZEmtypPW3PdieKLAHxh.jpg",
+      "original_language": "en",
+      "original_title": "Bad Boys for Life",
+      "genre_ids": [
+        28,
+        80,
+        53
+      ],
+      "title": "Bad Boys for Life",
+      "vote_average": 6.3,
+      "overview": "Continuación de las aventuras de los detectives Mike Lowrey y Marcus Burnett de Miami, atrapados entre persecuciones de coches y explosiones.",
+      "release_date": "2020-01-17"
+    },
+    {
+      "popularity": 80.11,
+      "vote_count": 130,
+      "video": false,
+      "poster_path": "\/2KlzkeqqmXaDdXo7D6pq7qQLJoM.jpg",
+      "id": 481848,
+      "adult": false,
+      "backdrop_path": "\/yFRpUmsreYO5Bc0HVBTsJsHIIox.jpg",
+      "original_language": "en",
+      "original_title": "The Call of the Wild",
+      "genre_ids": [
+        12,
+        18,
+        10751
+      ],
+      "title": "La llamada de lo salvaje",
+      "vote_average": 5.9,
+      "overview": "Cuenta la historia de Buck, un perro bonachón cuya vida cambia de la noche ala mañana cuando su dueño se muda de California a los exóticos parajes de Alaska durante la Fiebre del Oro a finales del s. XIX. Como novato de un grupo perros de trineo (y posteriormente su líder), Buck experimenta una aventura que jamás olvidará, encontrando su lugar en el mundo y convirtiéndose así en su propio amo.",
+      "release_date": "2020-02-21"
+    },
+    {
+      "popularity": 48.104,
+      "vote_count": 529,
+      "video": false,
+      "poster_path": "\/aodZLzbl7JaKSsdV6EJzl86EjcX.jpg",
+      "id": 448119,
+      "adult": false,
+      "backdrop_path": "\/lG802rseTZcN9mtLsQPVfApEVzM.jpg",
+      "original_language": "en",
+      "original_title": "Dolittle",
+      "genre_ids": [
+        12,
+        35,
+        14,
+        10751
+      ],
+      "title": "Las aventuras del Doctor Dolittle",
+      "vote_average": 6.3,
+      "overview": "Nueva adaptación de la historia del veterinario que descubre que puede entender y comunicarse con los animales.",
+      "release_date": "2020-01-17"
+    },
+    {
+      "popularity": 38.284,
+      "vote_count": 359,
+      "video": false,
+      "poster_path": "\/gvfQp5hUNKRUDAE7HMQdwGNl7Fs.jpg",
+      "id": 522627,
+      "adult": false,
+      "backdrop_path": "\/9Qfawg9WT3cSbBXQgDRuWbYS9lj.jpg",
+      "original_language": "en",
+      "original_title": "The Gentlemen",
+      "genre_ids": [
+        28,
+        35,
+        80
+      ],
+      "title": "The Gentlemen: Los señores de la mafia",
+      "vote_average": 7.9,
+      "overview": "Un capo de la droga con un marcado estilo británico intenta vender su imperio a una dinastía de multimillonarios procedentes de Oklahoma.",
+      "release_date": "2020-01-24"
+    },
+    {
+      "popularity": 37.587,
+      "id": 548473,
+      "video": false,
+      "vote_count": 89,
+      "vote_average": 6.3,
+      "title": "Color Out of Space",
+      "release_date": "2020-01-24",
+      "original_language": "en",
+      "original_title": "Color Out of Space",
+      "genre_ids": [
+        27,
+        878
+      ],
+      "backdrop_path": "\/iyn2JQsftaqhQlXYaCCvn8udM5i.jpg",
+      "adult": false,
+      "overview": "Una historia de terror cósmico sobre The Gardners, una familia que se muda a una granja remota en la zona rural de Nueva Inglaterra para escapar del ajetreo del siglo XXI. Están ocupados adaptándose a su nueva vida cuando un meteorito se estrella contra su patio delantero. La misteriosa aerolita parece derretirse en la tierra, infectando tanto la tierra como las propiedades del espacio-tiempo con un color extraño y de otro mundo. Para su horror, la familia Gardner descubre que esta fuerza alienígena está mutando gradualmente cada forma de vida que toca ... incluidas ellas.",
+      "poster_path": "\/vkwgzCBBiY3C1XEy0WakYfMOvnG.jpg"
+    },
+    {
+      "popularity": 37.257,
+      "vote_count": 135,
+      "video": false,
+      "poster_path": "\/y0ZX1ymtnZ4ATsQJjXTPaG9RdWD.jpg",
+      "id": 539537,
+      "adult": false,
+      "backdrop_path": "\/dzfiE2VHY362dGI62XfZ2iI87CT.jpg",
+      "original_language": "en",
+      "original_title": "Fantasy Island",
+      "genre_ids": [
+        14,
+        27,
+        878
+      ],
+      "title": "Fantasy Island",
+      "vote_average": 4.9,
+      "overview": "El enigmático Sr. Roarke hace realidad los sueños de los afortunados huéspedes que acuden a su lujoso y remoto resort tropical. Sin embargo, sus fantasías se convertirán en pesadillas, y los invitados deberán resolver el misterio que oculta la isla para poder escapar con vida. Adaptación en clave de terror del famoso programa de televisión de los años 70 ambientado en un resort ubicado en una isla mágica.",
+      "release_date": "2020-02-27"
+    },
+    {
+      "popularity": 31.687,
+      "vote_count": 37,
+      "video": false,
+      "poster_path": "\/cuuI1UVwnoyDoN691Z0bYZrOezx.jpg",
+      "id": 555974,
+      "adult": false,
+      "backdrop_path": "\/rpGYHowXtjw37UxdwO1ZcK5E8IN.jpg",
+      "original_language": "en",
+      "original_title": "Brahms: The Boy II",
+      "genre_ids": [
+        27,
+        9648,
+        53
+      ],
+      "title": "The Boy: La maldición de Brahms",
+      "vote_average": 5.5,
+      "overview": "Una familia joven que desconoce la oscura historia, se muda a la Mansión Heelshire. La premisa seguirá la historia del hijo menor que encuentra la muñeca de porcelana y se hace amigo de Brahms.",
+      "release_date": "2020-02-20"
+    },
+    {
+      "popularity": 23.88,
+      "vote_count": 0,
+      "video": false,
+      "poster_path": "\/eguSmkHDV7VOBOfddcQlHOdK4dI.jpg",
+      "id": 654879,
+      "adult": false,
+      "backdrop_path": "\/3hcV3AHMPfXR0qjeFxOjFvkR8He.jpg",
+      "original_language": "en",
+      "original_title": "Deported",
+      "genre_ids": [
+        35
+      ],
+      "title": "Deported",
+      "vote_average": 0,
+      "overview": "Cuando su nueva novia es deportada por un tecnicismo, Ross contrata a un esposo falso para que la regrese al país porque no está listo para casarse.",
+      "release_date": "2020-03-01"
+    },
+    {
+      "popularity": 34.005,
+      "vote_count": 337,
+      "video": false,
+      "poster_path": "\/muAsDE6qAqdKB2VJsIzo1uVSSuM.jpg",
+      "id": 531428,
+      "adult": false,
+      "backdrop_path": "\/joXf2ToDZjVMBxWrzijQ3V9cC8p.jpg",
+      "original_language": "fr",
+      "original_title": "Portrait de la jeune fille en feu",
+      "genre_ids": [
+        18,
+        10749
+      ],
+      "title": "Retrato de una mujer en llamas",
+      "vote_average": 8.3,
+      "overview": "Bretaña francesa, 1770. Marianne (Noémie Merlant) es una pintora que debe realizar el retrato matrimonial de Héloïse (Adèle Haenel), una joven que acaba de dejar el convento. Héloïse no acepta su destino como mujer casada y se niega a posar, por lo que Marianne debe trabajar en secreto. Para ello, se hace pasar por dama de compañía, para así observarla de día y pintarla de noche. Su relación se vuelve más intensa a medida que comparten juntas los últimos momentos de libertad de Héloïse antes de su boda.",
+      "release_date": "2019-12-06"
+    },
+    {
+      "popularity": 31.381,
+      "vote_count": 23,
+      "video": false,
+      "poster_path": "\/sm8iVzA7kRp0d4BSIsgXjsSBMKV.jpg",
+      "id": 556678,
+      "adult": false,
+      "backdrop_path": "\/l111ATIHwHQPL9dHKV5Lix85Azq.jpg",
+      "original_language": "en",
+      "original_title": "Emma.",
+      "genre_ids": [
+        35,
+        18
+      ],
+      "title": "Emma.",
+      "vote_average": 7.3,
+      "overview": "Guapa, inteligente y rica, la joven Emma Woodhouse es una reina sin rival en su pequeño pueblo. Nueva adaptación de la novela de Jane Austen publicada en 1815 sobre la vida de la joven Emma",
+      "release_date": "2020-02-21"
+    },
+    {
+      "popularity": 25.162,
+      "vote_count": 16,
+      "video": false,
+      "poster_path": "\/ji1JO9bZX3pQ15lhU96dj0gZO74.jpg",
+      "id": 526007,
+      "adult": false,
+      "backdrop_path": "\/kO651id9IGtMGz7OwT1ZThJ6NP2.jpg",
+      "original_language": "en",
+      "original_title": "The Night Clerk",
+      "genre_ids": [
+        80,
+        18
+      ],
+      "title": "The Night Clerk",
+      "vote_average": 6.6,
+      "overview": "",
+      "release_date": "2020-02-21"
+    },
+    {
+      "popularity": 21.544,
+      "vote_count": 17,
+      "video": false,
+      "poster_path": "\/bbAlQRWEPOsk58TrfCCCYxAAZTX.jpg",
+      "id": 592350,
+      "adult": false,
+      "backdrop_path": "\/9guoVF7zayiiUq5ulKQpt375VIy.jpg",
+      "original_language": "ja",
+      "original_title": "僕のヒーローアカデミア THE MOVIE ヒーローズ：ライジング",
+      "genre_ids": [
+        16
+      ],
+      "title": "My Hero Academia: Heroes Rising",
+      "vote_average": 8.9,
+      "overview": "Un nuevo villano, llamado Nine, está buscando a Tomura Shigaraki. Para ello, decide atacar la isla de Nabutō. Segunda película de la serie anime \"My Hero Academia\".",
+      "release_date": "2020-02-26"
+    },
+    {
+      "popularity": 21.385,
+      "vote_count": 31,
+      "video": false,
+      "poster_path": "\/uXTtUYleKiaF0KuBwupIeuSjyLA.jpg",
+      "id": 615453,
+      "adult": false,
+      "backdrop_path": "\/58W0GbpzJlOC0Mce9R2N4ZSG97w.jpg",
+      "original_language": "zh",
+      "original_title": "哪吒之魔童降世",
+      "genre_ids": [
+        16,
+        35,
+        14
+      ],
+      "title": "Ne Zha",
+      "vote_average": 7.3,
+      "overview": "Nezha, nacido de una perla celestial con poderes únicos, pronto se encontrará exiliado, odiado y temido por la gente que cree en una profecía que indica que él traerá la destrucción del mundo. Llegará el momento en el que deberá decidir entre el bien y el mal con el propósito de romper los grilletes del destino y convertirse en un héroe. Película inspirada muy libremente en \"Fengshen Yanyi\" (\"La Investidura de los Dioses\"), una de las grandes novelas chinas escritas en la Dinastía Ming cuya autoría se atribuye a Xu Zhonglin o Lu Xixing.",
+      "release_date": "2019-08-29"
+    }
+  ],
+  "page": 1,
+  "total_results": 106,
+  "dates": {
+    "maximum": "2020-03-02",
+    "minimum": "2020-01-14"
+  },
+  "total_pages": 6
+}
