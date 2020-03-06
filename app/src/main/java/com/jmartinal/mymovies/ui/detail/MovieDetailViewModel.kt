@@ -91,7 +91,7 @@ class MovieDetailViewModel(
     fun onFavoriteClicked() = launch {
         _movie.value?.let {
             val updatedMovie = it.copy(favorite = !it.favorite)
-            toggleMovieFavorite.invoke(updatedMovie)
+            toggleMovieFavorite.invoke(it)
             _movie.value = updatedMovie
             updateUI()
         }

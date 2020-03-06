@@ -17,5 +17,4 @@ val mockedMovie = Movie(
     false,
     7.5F,
     1234
-
 )
