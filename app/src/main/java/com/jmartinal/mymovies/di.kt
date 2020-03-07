@@ -18,6 +18,7 @@ import com.jmartinal.mymovies.data.DeviceLanguageDataSource
 import com.jmartinal.mymovies.data.PlayServicesLocationDataSource
 import com.jmartinal.mymovies.data.database.MovieDB
 import com.jmartinal.mymovies.data.database.RoomDataSource
+import com.jmartinal.mymovies.data.server.TheMovieDb
 import com.jmartinal.mymovies.data.server.TheMovieDbDataSource
 import com.jmartinal.mymovies.ui.detail.MovieDetailActivity
 import com.jmartinal.mymovies.ui.detail.MovieDetailViewModel
@@ -51,12 +52,14 @@ val appModule = module {
     factory<AppCompatActivity> { MainActivity() }
     single { Room.databaseBuilder(get(), MovieDB::class.java, "movie-db").build() }
     factory<LocalDataSource> { RoomDataSource(get()) }
-    factory<RemoteDataSource> { TheMovieDbDataSource() }
+    factory<RemoteDataSource> { TheMovieDbDataSource(get()) }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionManager> { AndroidPermissionManager(get(), get()) }
     factory<LanguageDataSource> { DeviceLanguageDataSource(get()) }
     factory<ConnectivityManager> { AndroidConnectivityManager(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
+    single(named("baseUrl")) { Constants.TmdbApi.BASE_URL }
+    single { TheMovieDb(get(named("baseUrl"))) }
 }
 
 val dataModule = module {

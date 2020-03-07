@@ -9,11 +9,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class TheMovieDb(private val baseUrl: String) {
+class TheMovieDb(baseUrl: String) {
 
     private val tmdbInterceptor = Interceptor { chain ->
         val newUrl =
-            chain.request().url()
+            chain.request().url
                 .newBuilder()
                 .addQueryParameter("api_key", Constants.TmdbApi.API_KEY)
                 .build()
