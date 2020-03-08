@@ -1,4 +1,4 @@
-package com.jmartinal.mymovies
+package com.jmartinal.mymovies.ui
 
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.rules.TestRule
@@ -30,12 +30,13 @@ class MockWebServerRule : TestRule {
         return url
     }
 
-    override fun apply(base: Statement, description: Description) = object : Statement() {
+    override fun apply(base: Statement?, description: Description?) = object : Statement() {
         override fun evaluate() {
             server.start()
             replaceBaseUrl()
-            base.evaluate()
+            base?.evaluate()
             server.shutdown()
         }
     }
+
 }

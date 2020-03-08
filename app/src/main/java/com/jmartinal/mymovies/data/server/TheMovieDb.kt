@@ -13,7 +13,7 @@ class TheMovieDb(baseUrl: String) {
 
     private val tmdbInterceptor = Interceptor { chain ->
         val newUrl =
-            chain.request().url
+            chain.request().url()
                 .newBuilder()
                 .addQueryParameter("api_key", Constants.TmdbApi.API_KEY)
                 .build()
@@ -27,7 +27,7 @@ class TheMovieDb(baseUrl: String) {
         chain.proceed(newRequest)
     }
 
-    private val client = OkHttpClient().newBuilder()
+    val client: OkHttpClient = OkHttpClient().newBuilder()
         .addInterceptor(tmdbInterceptor)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level =

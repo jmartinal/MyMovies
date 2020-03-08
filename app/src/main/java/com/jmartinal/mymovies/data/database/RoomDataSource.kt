@@ -18,7 +18,9 @@ class RoomDataSource(db: MovieDB) : LocalDataSource {
         withContext(Dispatchers.IO) { movieDao.getById(id).toDomainMovie() }
 
     override suspend fun getPopularMovies(): List<Movie> =
-        withContext(Dispatchers.IO) { movieDao.getAll().map { it.toDomainMovie() } }
+        withContext(Dispatchers.IO) {
+            movieDao.getAll().map { it.toDomainMovie() }.sortedByDescending { it.popularity }
+        }
 
     override suspend fun saveMovies(movies: List<Movie>) {
         withContext(Dispatchers.IO) { movieDao.insert(movies.map { it.toRoomMovie() }) }
