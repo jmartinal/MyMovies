@@ -48,15 +48,22 @@ class MainUITest : KoinTest {
     @Test
     fun clickAMovieNavigatesToDetail() {
         activityTestRule.launchActivity(null)
+
+        /**
+         * List is not visible yet, so if the thread doesn't wait a little bit the test fails.
+         * There are other solutions but it would involve many changes in the app, so as this is
+         * only an example this solution was considered acceptable
+         */
+        Thread.sleep(200)
         onView(withId(R.id.moviesList)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                1,
+                10,
                 click()
             )
         )
 
         onView(withId(R.id.detailMovieTitle))
-            .check(matches(withText("El hombre invisible")))
+            .check(matches(withText("The Way Back")))
 
     }
 
