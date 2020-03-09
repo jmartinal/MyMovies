@@ -48,15 +48,17 @@ class MainUITest : KoinTest {
     @Test
     fun clickAMovieNavigatesToDetail() {
         activityTestRule.launchActivity(null)
+
+        Thread.sleep(200)
         onView(withId(R.id.moviesList)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                1,
+                10,
                 click()
             )
         )
 
         onView(withId(R.id.detailMovieTitle))
-            .check(matches(withText("El hombre invisible")))
+            .check(matches(withText("The Way Back")))
 
     }
 
