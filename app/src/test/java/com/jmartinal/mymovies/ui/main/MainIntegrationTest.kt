@@ -72,6 +72,9 @@ class MainIntegrationTest : AutoCloseKoinTest() {
 
     @Test
     fun `no movies are loaded when there is no connectivity`() {
+        val localDataSource = get<LocalDataSource>() as FakeLocalDataSource
+        localDataSource.movies = emptyList()
+
         val connectivityManager = get<ConnectivityManager>() as FakeConnectivityManager
         connectivityManager.connectivityAvailable = false
 
